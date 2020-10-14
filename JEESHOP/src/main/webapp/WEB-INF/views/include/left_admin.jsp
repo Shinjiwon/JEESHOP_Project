@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -13,7 +14,17 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0"><br>
-
+      
+      <!-- 로그인 안 한 상태 -->
+      <c:if test="${sessionScope.admin == null}">
+      <div class="sidebar-heading">
+       	 JEESHOP 관리자페이지 입니다.
+       	 관리자이시면 로그인하세요.
+      </div>
+		</c:if>
+		
+	  <!-- 로그인 한 상태 -->
+	  <c:if test="${sessionScope.admin != null}">
       <!-- Heading -->
       <div class="sidebar-heading">
         MENU
@@ -64,11 +75,11 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
-
+	  	
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
+	  </c:if>
     </ul>
     <!-- End of Sidebar -->

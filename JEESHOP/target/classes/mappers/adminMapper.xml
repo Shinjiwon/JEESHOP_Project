@@ -6,8 +6,15 @@
 
 	<!-- 관리자 로그인 -->
 	<select id="login" parameterType="AdminDTO" resultType="AdminVO">
-		SELECT ADMIN_ID, ADMIN_PW
+		SELECT ADMIN_ID, ADMIN_PW, ADMIN_DATE
 		FROM ADMIN_TB
 		WHERE ADMIN_ID = #{admin_id} AND ADMIN_PW = #{admin_pw}
 	</select>
+	
+	<!-- 관리자 로그인 시간 업데이트 -->
+	<update id="loginUpdate" parameterType="String">
+		UPDATE ADMIN_TB
+		SET ADMIN_DATE = SYSDATE
+		WHERE ADMIN_ID = #{admin_id}
+	</update>
 </mapper>

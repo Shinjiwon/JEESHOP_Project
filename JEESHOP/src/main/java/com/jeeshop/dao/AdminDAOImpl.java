@@ -20,4 +20,11 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return session.selectOne(NS+".login", dto);
 	}
+
+	// 관리자 로그인 시간 업데이트
+	@Override
+	public void loginUpdate(String admin_id) throws Exception {
+
+		session.update(NS+".loginUpdate", admin_id);
+	}
 }

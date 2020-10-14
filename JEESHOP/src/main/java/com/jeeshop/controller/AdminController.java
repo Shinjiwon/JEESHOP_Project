@@ -45,8 +45,10 @@ public class AdminController {
 		
 		if(vo != null) { // 로그인 성공
 			
+			service.loginUpdate(dto.getAdmin_id());
 			// 세션정보 저장 시 사용자로그인 key와 달라야한다.
 			session.setAttribute("admin", vo);
+			
 			msg = "LOGIN_SUCCESS";
 			
 		} else { // 로그인 실패

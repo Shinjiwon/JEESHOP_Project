@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 	
@@ -9,23 +11,29 @@
 	
 	<!-- Topbar Navbar -->
 	<ul class="navbar-nav ml-auto">
-		<!-- 로그인 -->
+		<!-- 로그인 안 한 상태 -->
+		<c:if test="${sessionScope.admin == null}">
 		<li class="nav-item dropdown no-arrow">
 		   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인</span>
+		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인하세요.</span>
 		   </a>
 		</li>
+		</c:if>
 		
+		<!-- 로그인 한 상태 -->
+		<c:if test="${sessionScope.admin != null}">
 		<li class="nav-item dropdown no-arrow">
 		   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그아웃</span>
+		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+		     	최근 접속 시간: <fmt:formatDate value="${admin.admin_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+		     </span>
 		   </a>
 		</li>
 		
 		 <!-- 사용자 이름 -->
 		<li class="nav-item dropdown no-arrow">
 		  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+		    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${admin.admin_id }님</span>
 		    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 		  </a>
 		  <!-- Dropdown - User Information -->
@@ -45,5 +53,12 @@
 		        </a>
 		      </div>
 		    </li>
+		    
+		    <li class="nav-item dropdown no-arrow">
+		   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그아웃</span>
+		   </a>
+		</li>
+		    </c:if>
 	  </ul>
 	</nav>

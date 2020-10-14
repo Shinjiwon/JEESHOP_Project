@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,15 @@
 
   <!-- CSS -->
   <%@include file="/WEB-INF/views/include/admincss.jsp" %>
+  
+  <script>
+  	if("${msg}"=="LOGIN_SUCCESS"){
+  		alert("로그인 되었습니다.");
+  		
+  	} else if("${msg}"=="LOGIN_FAIL"){
+  		alert("로그인에 실패하였습니다. \n아이디와 비밀번호를 다시 입력하세요.");
+  	}
+  </script>
 </head>
 
 <body>
@@ -30,8 +40,10 @@
         <%@include file="/WEB-INF/views/include/header_admin.jsp" %>
 
         <!-- 주요 내용 -->
+        
         <div class="container-fluid">
 			<div class="container" style="width: 450px; height:520px; margin-top:30px;">
+					<c:if test="${sessionScope.admin == null }">
 					<form id="adminloginForm" class="form-signin" action="/admin/login" method="post" style="padding:50px 30px;">
 						<h2 class="form-signin-heading">관리자 로그인</h2>
 						<br><br>
@@ -49,6 +61,7 @@
 							로그인
 						</button>
 					</form>
+					</c:if>
 				</div>
         </div>
         <!-- 주요 내용  -->
@@ -65,6 +78,9 @@
 
   <!-- JS -->
   <%@include file="/WEB-INF/views/include/adminjs.jsp" %>
+  
+  <!-- 유효성 검사 -->
+  <script type="text/javascript" src="/js/admin/login.js"></script>
 </body>
 
 </html>

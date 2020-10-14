@@ -19,5 +19,12 @@ public class AdminServiceImpl implements AdminService {
 
 		return dao.login(dto);
 	}
+
+	// 관리자 로그인 시간 업데이트
+	@Override
+	public void loginUpdate(String admin_id) throws Exception {
+
+		dao.loginUpdate(admin_id);
+	}
 	
 }

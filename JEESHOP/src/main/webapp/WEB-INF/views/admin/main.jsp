@@ -21,6 +21,10 @@
   		
   	} else if("${msg}"=="LOGIN_FAIL"){
   		alert("로그인에 실패하였습니다. \n아이디와 비밀번호를 다시 입력하세요.");
+  		
+  	} else if("${msg}"=="LOGOUT_SUCCESS"){
+  		alert("로그아웃되었습니다.");
+  		
   	}
   </script>
 </head>

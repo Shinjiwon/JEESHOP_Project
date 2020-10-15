@@ -33,6 +33,13 @@ public class AdminController {
 		return "admin/main";
 	}
 	
+	// ▶ 로그인 페이지
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public void loginGET() {
+		
+		logger.info("=====loginGET execute()...");
+	}
+	
 	// ▶ 관리자 로그인
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginPOST(AdminDTO dto, HttpSession session, RedirectAttributes rttr) throws Exception {
@@ -46,7 +53,9 @@ public class AdminController {
 		
 		if(vo != null) { // 로그인 성공
 			
+			// 관리자 로그인 시간 업데이트
 			service.loginUpdate(dto.getAdmin_id());
+			
 			// 세션정보 저장 시 사용자로그인 key와 달라야한다.
 			session.setAttribute("admin", vo);
 			

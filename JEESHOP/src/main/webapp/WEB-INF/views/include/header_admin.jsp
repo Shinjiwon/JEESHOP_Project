@@ -14,8 +14,8 @@
 		<!-- 로그인 안 한 상태 -->
 		<c:if test="${sessionScope.admin == null}">
 		<li class="nav-item dropdown no-arrow">
-		   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인하세요.</span>
+		   <a class="nav-link dropdown-toggle" href="/admin/login" id="userDropdown" aria-haspopup="true" aria-expanded="false">
+		     <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인</span>
 		   </a>
 		</li>
 		</c:if>

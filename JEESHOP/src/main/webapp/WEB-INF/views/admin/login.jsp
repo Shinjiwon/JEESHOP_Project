@@ -10,23 +10,11 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>JEESHOP 관리자 페이지</title>
+  <title>JEESHOP 관리자로그인</title>
 
   <!-- CSS -->
   <%@include file="/WEB-INF/views/include/admincss.jsp" %>
   
-  <script>
-  	if("${msg}"=="LOGIN_SUCCESS"){
-  		alert("로그인 되었습니다.");
-  		
-  	} else if("${msg}"=="LOGIN_FAIL"){
-  		alert("로그인에 실패하였습니다. \n아이디와 비밀번호를 다시 입력하세요.");
-  		
-  	} else if("${msg}"=="LOGOUT_SUCCESS"){
-  		alert("로그아웃되었습니다.");
-  		
-  	}
-  </script>
 </head>
 
 <body>
@@ -47,21 +35,23 @@
         
         <div class="container-fluid">
 			<div class="container" style="width: 450px; height:520px; margin-top:30px;">
-					<!-- 로그인 안 한 상태 -->
-					<c:if test="${sessionScope.admin == null }">
-					<br>
-					<h2>관리자이시면 상단메뉴의<br>
-						 로그인 페이지에서<br/> 
-						로그인하세요. :)</h2>
-					</c:if>
-					
-					<!-- 로그인 한 상태 -->
-					<c:if test="${sessionScope.admin != null }">
-					<br>
-					<h2>Welcome!<br></h2>
-					<h4>This is Admin Main page. <br/> 
-						Please click on the menu you want to work on :)</h4>
-					</c:if>
+					<form id="adminloginForm" class="form-signin" action="/admin/login" method="post" style="padding:50px 30px;">
+						<h2 class="form-signin-heading">관리자 로그인</h2>
+						<br><br>
+						
+						<label for="inputId" class="sr-only">아이디</label> 
+						<input type="text" id="admin_id" name="admin_id" class="form-control" style="margin-bottom: 15px"
+							placeholder="아이디" required autofocus> 
+							
+						<label for="inputPassword" class="sr-only">비밀번호</label> 
+						<input type="password" id="admin_pw" name="admin_pw" class="form-control"
+							placeholder="비밀번호" required>
+						<br><br><br>
+						
+						<button id="btn_login" class="btn btn-lg btn-primary btn-block" type="submit">
+							로그인
+						</button>
+					</form>
 				</div>
         </div>
         <!-- 주요 내용  -->
@@ -79,6 +69,8 @@
   <!-- JS -->
   <%@include file="/WEB-INF/views/include/adminjs.jsp" %>
   
+  <!-- 유효성 검사 -->
+  <script type="text/javascript" src="/js/admin/login.js"></script>
 </body>
 
 </html>

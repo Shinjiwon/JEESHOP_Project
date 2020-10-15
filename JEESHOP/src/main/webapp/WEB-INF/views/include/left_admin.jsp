@@ -27,7 +27,7 @@
 	  <c:if test="${sessionScope.admin != null}">
       <!-- Heading -->
       <div class="sidebar-heading">
-        MENU
+        	관리자 MENU
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
@@ -39,7 +39,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">상품관리 MENU</h6>
-            <a class="collapse-item" href="#">상품 등록</a>
+            <a class="collapse-item" href="/admin/product/insert">상품 등록</a>
             <a class="collapse-item" href="#">상품 목록</a>
           </div>
         </div>

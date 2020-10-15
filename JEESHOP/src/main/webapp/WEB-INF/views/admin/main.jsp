@@ -58,9 +58,9 @@
 					<!-- 로그인 한 상태 -->
 					<c:if test="${sessionScope.admin != null }">
 					<br>
-					<h2>Welcome!<br></h2>
-					<h4>This is Admin Main page. <br/> 
-						Please click on the menu you want to work on :)</h4>
+					<h2>어서오세요!<br></h2>
+					<h2>관리자 페이지 입니다.<br></h2> 
+					<h4>관리자 메뉴에서 할 일을 실행하세요:)</h4>
 					</c:if>
 				</div>
         </div>

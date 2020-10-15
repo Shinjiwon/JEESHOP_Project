@@ -7,6 +7,7 @@
 	<typeAliases>
 		<package name="com.jeeshop.domain"/>
 		<package name="com.jeeshop.dto"/>
+		<package name="com.jeeshop.util"/>
 	</typeAliases>
 	
 </configuration>

@@ -47,6 +47,7 @@
         
         <div class="container-fluid">
 			<div class="container" style="width: 450px; height:520px; margin-top:30px;">
+					<!-- 로그인 안 한 상태 -->
 					<c:if test="${sessionScope.admin == null }">
 					<form id="adminloginForm" class="form-signin" action="/admin/login" method="post" style="padding:50px 30px;">
 						<h2 class="form-signin-heading">관리자 로그인</h2>
@@ -65,6 +66,14 @@
 							로그인
 						</button>
 					</form>
+					</c:if>
+					
+					<!-- 로그인 한 상태 -->
+					<c:if test="${sessionScope.admin != null }">
+					<br>
+					<h2>Welcome!<br></h2>
+					<h4>This is Admin Main page. <br/> 
+						Please click on the menu you want to work on :)</h4>
 					</c:if>
 				</div>
         </div>

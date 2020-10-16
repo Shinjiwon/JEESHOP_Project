@@ -4,17 +4,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>JEESHOP 상품등록</title>
-
-  <!-- CSS -->
-  <%@include file="/WEB-INF/views/include/admincss.jsp" %>
+	<title>JEESHOP 상품등록</title>
+	
+	  <!-- CSS -->
+	<%@include file="/WEB-INF/views/include/admincss.jsp" %>
   
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+	
+	<!-- Handlebar Template -->
+	<script id="subCateListTemplate" type="text/x-handlebars-template">
+		<option value="default">2차 카테고리 선택</option>
+		{{#each .}}
+		<option value="{{cate_code}}">{{cate_name}}</option>
+		{{/each}}
+	</script>
 </head>
 
 <body>
@@ -65,13 +68,13 @@
 									
 									<div class="form-group">
 										<label for="exampleInputEmail1">상품명</label> <input
-											type="text" id="pdt_name" name="pdt_name" class="form-control"
+											type="text" id="pro_name" name="pro_name" class="form-control"
 											placeholder="상품명을 입력하세요.">
 									</div>
 									
 									<div class="form-group">
 										<label for="exampleInputEmail1">제조사</label> <input
-											type="text" id="pdt_company" name="pdt_company" class="form-control"
+											type="text" id="pro_dev" name="pro_dev" class="form-control"
 											placeholder="제조사를 입력하세요.">
 									</div>
 									
@@ -79,16 +82,16 @@
 										<label for="exampleInputEmail1" style="width:40%; margin-right:10px;">상품 가격</label> 
 										<label for="exampleInputEmail1" style="width:40%;">할인</label> 
 										<input style="width:40%; margin-right:10px; display: inline-block;"
-											type="text" id="pdt_price" name="pdt_price" class="form-control" 
+											type="text" id="pro_price" name="pro_price" class="form-control" 
 											placeholder="상품가격을 입력하세요." />
 										<input style="width:40%; display: inline-block;"
-											type="text" id="pdt_discount" name="pdt_discount" class="form-control "
+											type="text" id="pro_discount" name="pro_discount" class="form-control "
 											placeholder="할인률을 입력하세요." />
 									</div>
 									
 									<div class="form-group">
 										<label for="exampleInputPassword1">상품 상세</label>
-										<textarea class="form-control" id="pdt_detail" name="pdt_detail" rows="8"
+										<textarea class="form-control" id="pro_detail" name="pro_detail" rows="8"
 											placeholder="상품상세 입력 ..."></textarea>
 									</div>
 
@@ -101,9 +104,9 @@
 										<label for="exampleInputEmail1" style="width:30%; margin-right:10px;">상품 수량</label> 
 										<label for="exampleInputEmail1" style="width:15%;">구매 가능여부</label><br /> 
 										<input style="width:30%; margin-right:10px; display: inline-block;"
-											type="text" id="pdt_amount" name='pdt_amount' class="form-control" 
+											type="text" id="pro_amount" name='pro_amount' class="form-control" 
 											placeholder="상품 수량을 입력하세요." />
-										<select class="form-control" id="pdt_buy" name="pdt_buy" style="width: 15%; display: inline-block;">
+										<select class="form-control" id="pro_buy" name="pro_buy" style="width: 15%; display: inline-block;">
 										  <option>Y</option>
 										  <option>N</option>
 										</select>
@@ -145,6 +148,39 @@
   <%@include file="/WEB-INF/views/include/adminjs.jsp" %>
   
   <!-- 유효성 검사 -->
+  <!-- CkEditor, 2차카테고리 -->
+	<script>
+		/* 1차 카테고리에 해당하는 2차 카테고리 출력 */
+		$(document).ready(function(){
+		
+		    $("#mainCategory").change(function(){
+		
+		        // 선택한 1차 카테고리 값
+		        var mainCateCode = $(this).val();
+		        // url매핑주소를 경로형태로 사용 @PathVarialbe
+		        var url = "/admin/product/subCateList/" + mainCateCode;
+		
+		        $.getJSON(url, function(data) {
+		            // data: 2차 카테고리 데이터 정보
+		            // 데이터를 subCategory에 적용
+		        subCateList(data, $("#subCategory"), $("#subCateListTemplate"))
+		        });
+		    });
+		
+		});
+	</script>
+	
+	<!-- Handlebars템플릿에 2차카테고리 데이터 적용 -->
+	<script>
+		var subCateList = function(subCateStr, target, templateObject){
+		    
+		    var template = Handlebars.compile(templateObject.html());
+		    var options = template(subCateStr);
+	
+		    $("#subCategory option").remove();
+		    target.append(options);
+		}
+	</script>
 </body>
 
 </html>

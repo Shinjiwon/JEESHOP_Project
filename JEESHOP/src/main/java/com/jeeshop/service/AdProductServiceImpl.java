@@ -21,4 +21,11 @@ public class AdProductServiceImpl implements AdProductService {
 		return dao.mainCateList();
 	}
 
+	// 1차 카테고리에 해당하는 2차 카테고리 출력
+	@Override
+	public List<CategoryVO> subCateList(String cate_code) throws Exception {
+		
+		return dao.subCateList(cate_code);
+	}
+
 }

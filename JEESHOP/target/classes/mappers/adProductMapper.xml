@@ -10,4 +10,11 @@
 		FROM CATEGORY_TB
 		WHERE CATE_PRTCODE IS NULL
 	</select>
+	
+	<!-- 1차 카테고리에 해당하는 2차 카테고리 출력 -->
+	<select id="subCateList" parameterType="String" resultType="CategoryVO">
+		SELECT CATE_CODE, CATE_PRTCODE, CATE_NAME
+		FROM CATEGORY_TB
+		WHERE CATE_PRTCODE = #{cate_code}
+	</select>
 </mapper>

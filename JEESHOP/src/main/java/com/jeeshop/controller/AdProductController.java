@@ -1,5 +1,7 @@
 package com.jeeshop.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
@@ -68,6 +70,7 @@ public class AdProductController {
 	}
 	
 	// ▶ CkEditor를 통한 상품상세 이미지 업로드
+	@RequestMapping(value = "imgUpload", method = RequestMethod.POST)
 	public void imgUpload(HttpServletRequest req, HttpServletResponse res, MultipartFile upload) {
 		
 		logger.info("imgUpload execute()...");
@@ -80,11 +83,45 @@ public class AdProductController {
 		res.setContentType("text/html;charset=utf-8");
 		
 		try {
-			// 전송 할 파일 가져오기
+			// 전송 할 파일 정보 가져오기
 			String fileName = upload.getOriginalFilename();
+			byte[] bytes = upload.getBytes();
+			
+			// 톰캣이 현재 프로젝트 대신 임시로 사용하기 위한 폴더정보 참조
+			// D:\workspace\spring_work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\JEESHOP
+			String uploadPath = req.getSession().getServletContext().getRealPath("/");
+			uploadPath = uploadPath + "resources\\upload\\" + fileName;
+			
+			logger.info("uploadPath: " + uploadPath);
+			
+			// 출력 스트림 생성
+			out = new FileOutputStream(new File(uploadPath));
+			// 파일 쓰기
+			out.write(bytes);
+			
+			// 2)클라이언트로 보내기 위한 정보 설정
+			// <resources mapping="/upload/**" location="/resources/upload/" />
+			printWriter = res.getWriter();
+			String fileUrl = "/upload/" + fileName;
+			
+			// 업로드된 파일의 정보를 CkEditor로 보내는 기능. 자바스크립트 객체구문 문법(JSON)
+			printWriter.println("{\"filename\":\"" + fileName + "\", \"uploaded\":1,\"url\":\"" + fileUrl + "\"}");
+			printWriter.flush();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			
+		} finally {
+			if (out != null) {
+				// 출력 스트림 종료
+				try {out.close();} catch (Exception e) {e.printStackTrace();}
+				
+			}
+			if (printWriter != null) {
+				// printWriter 종료
+				try {printWriter.close();} catch (Exception e) {e.printStackTrace();}
+			}
 		}
 	}
+	
 }

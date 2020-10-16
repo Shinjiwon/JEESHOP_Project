@@ -161,14 +161,14 @@
 				enterMode: CKEDITOR.ENTER_BR,
 				shiftEnterMode: CKEDITOR.ENTER_P,
 				toolbarCanCollapse: true,
-				removePlugins: "elementspath",
+				removePlugins : "elementspath", 
 				/* 파일 업로드 기능
 				   CkEditor를 이용해 업로드 할 때 아래 주소에 업로드	
 				*/
-				filebrowserUploadUrl: "/admin/product/imgUpload"
+				filebrowserUploadUrl: '/admin/product/imgUpload'
 				
 			};
-			CKEDITOR.replace("pro_detail");
+			CKEDITOR.replace("pro_detail", ckeditor_config);
 		
 			/* 1차 카테고리에 해당하는 2차 카테고리 출력 */
 		    $("#mainCategory").change(function(){

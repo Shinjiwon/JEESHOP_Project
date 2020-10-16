@@ -9,6 +9,8 @@
 	  <!-- CSS -->
 	<%@include file="/WEB-INF/views/include/admincss.jsp" %>
   
+  	<!-- CkEditor, Handlebars -->
+  	<script src="/ckeditor/ckeditor.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 	
 	<!-- Handlebar Template -->
@@ -150,9 +152,25 @@
   <!-- 유효성 검사 -->
   <!-- CkEditor, 2차카테고리 -->
 	<script>
-		/* 1차 카테고리에 해당하는 2차 카테고리 출력 */
 		$(document).ready(function(){
+			
+			/* CkEditor 설정 */
+			// config.js 외 개별설정. JSON문법 스타일 사용한 설정 구문
+			var ckeditor_config = {
+				resize_enable: false,
+				enterMode: CKEDITOR.ENTER_BR,
+				shiftEnterMode: CKEDITOR.ENTER_P,
+				toolbarCanCollapse: true,
+				removePlugins: "elementspath",
+				/* 파일 업로드 기능
+				   CkEditor를 이용해 업로드 할 때 아래 주소에 업로드	
+				*/
+				filebrowserUploadUrl: "/admin/product/imgUpload"
+				
+			};
+			CKEDITOR.replace("pro_detail");
 		
+			/* 1차 카테고리에 해당하는 2차 카테고리 출력 */
 		    $("#mainCategory").change(function(){
 		
 		        // 선택한 1차 카테고리 값

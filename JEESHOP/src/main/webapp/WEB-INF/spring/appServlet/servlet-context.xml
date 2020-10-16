@@ -15,23 +15,40 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	
+	<resources mapping="/js/**" location="/resources/js/" />
+	
+	<!-- JEESHOP쇼핑몰 페이지 -->
 	<resources mapping="/assets/css/**" location="/resources/assets/css/" />
 	<resources mapping="/assets/img/**" location="/resources/assets/img/" />
 	<resources mapping="/assets/js/**" location="/resources/assets/js/" />
 	<resources mapping="/assets/fonts/**" location="/resources/assets/fonts/" />
 	
-	<resources mapping="/js/**" location="/resources/js/" />
-	
+	<!-- 관리자 페이지 -->
 	<resources mapping="/sb/css/**" location="/resources/sb/css/" />
 	<resources mapping="/sb/img/**" location="/resources/sb/img/" />
 	<resources mapping="/sb/js/**" location="/resources/sb/js/" />
 	<resources mapping="/sb/vendor/**" location="/resources/sb/vendor/" />
+
+	<resources mapping="/ckeditor/**" location="/resources/ckeditor/" />
+	
+	<!-- CkEditor 상품상세 이미지 업로드 폴더 -->
+	<resources mapping="/upload/**" location="/resources/upload/" />
 	
 	<context:component-scan base-package="com.jeeshop.controller" />
 	<context:component-scan base-package="com.jeeshop.dao" />
 	<context:component-scan base-package="com.jeeshop.domain" />
 	<context:component-scan base-package="com.jeeshop.dto" />
 	<context:component-scan base-package="com.jeeshop.service" />
+	
+	<!-- MultipartFile file -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" />
+	</beans:bean>
+	
+	<!-- 파일 업로드 Path: 상품 업로드 이미지 경로(섬네일 이미지) / 외부 영역에 저장 -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="D:\\Temp"></beans:constructor-arg>
+	</beans:bean>
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

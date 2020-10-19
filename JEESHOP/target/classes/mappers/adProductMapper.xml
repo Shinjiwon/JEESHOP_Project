@@ -17,4 +17,12 @@
 		FROM CATEGORY_TB
 		WHERE CATE_PRTCODE = #{cate_code}
 	</select>
+	
+	<!-- 상품 등록 -->
+	<insert id="insertProduct" parameterType="ProductVO">
+		INSERT INTO PRODUCT_TB(PRO_NUM, CATE_CODE, CATE_PRTCODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+						PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT ,PRO_BUY, PRO_DATE)
+    		VALUES(SEQ_PRO_NUM.NEXTVAL, #{cate_code}, #{cate_prtcode}, #{pro_name}, #{pro_price}, #{pro_discount}, 
+    				#{pro_dev}, #{pro_detail}, #{pro_img}, #{pro_amount}, #{pro_buy}, SYSDATE)
+	</insert>
 </mapper>

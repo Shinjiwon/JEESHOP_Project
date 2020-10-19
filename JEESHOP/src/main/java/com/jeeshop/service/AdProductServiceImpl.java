@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jeeshop.dao.AdProductDAO;
 import com.jeeshop.domain.CategoryVO;
+import com.jeeshop.domain.ProductVO;
 
 @Service
 public class AdProductServiceImpl implements AdProductService {
@@ -26,6 +27,13 @@ public class AdProductServiceImpl implements AdProductService {
 	public List<CategoryVO> subCateList(String cate_code) throws Exception {
 		
 		return dao.subCateList(cate_code);
+	}
+
+	// 상품 등록
+	@Override
+	public void insertProduct(ProductVO vo) throws Exception {
+
+		dao.insertProduct(vo);
 	}
 
 }

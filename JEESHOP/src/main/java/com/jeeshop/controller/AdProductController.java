@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jeeshop.domain.CategoryVO;
+import com.jeeshop.domain.ProductVO;
 import com.jeeshop.service.AdProductService;
+import com.jeeshop.util.FileUtils;
 
 @Controller
 @RequestMapping("/admin/product/*")
@@ -31,6 +35,10 @@ public class AdProductController {
 	
 	@Autowired
 	AdProductService service;
+	
+	// 웹프로젝트영역 외부에 파일을 저장할 경로. servlet-context.xml에서 설정
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdProductController.class);
 	
@@ -42,6 +50,20 @@ public class AdProductController {
 		
 		// 1차 카테고리 리스트
 		model.addAttribute("cateList", service.mainCateList());
+	}
+	
+	// ▶ 상품 등록(POST)
+	public String proInsertPOST(ProductVO vo, RedirectAttributes rttr) throws Exception {
+	
+		logger.info("=====proInsertPOST execute()...");
+		logger.info(vo.toString());
+		
+		vo.setPro_img(FileUtils.uploadFile(uploadPath, vo.getFile1().getOriginalFilename(), vo.getFile1().getBytes()));
+		
+		service.insertProduct(vo);
+		rttr.addFlashAttribute("msg", "INSERT_SUCCESS");
+		
+		return null;
 	}
 	
 	// ▶ 1차 카테고리에 해당하는 2차 카테고리
@@ -124,4 +146,17 @@ public class AdProductController {
 		}
 	}
 	
+	// ▶ 저장된 파일을 가져와 섬네일 이미지에 출력. 저장된 파일을 가져와 반환
+	@ResponseBody
+	@RequestMapping(value = "displayFile", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
+		
+		return FileUtils.getFiles(uploadPath, fileName);
+	}
+	
+	// ▶ 이미지 파일 삭제 → 선택된 상품 삭제할 때 사용되는 메서드
+	public void deleteFile(String fileName) {
+		
+		FileUtils.deleteFile(uploadPath, fileName);
+	}
 }

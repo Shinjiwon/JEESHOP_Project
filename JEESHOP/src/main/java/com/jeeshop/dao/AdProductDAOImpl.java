@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jeeshop.domain.CategoryVO;
 import com.jeeshop.domain.ProductVO;
+import com.jeeshop.util.SearchCriteria;
 
 @Repository
 public class AdProductDAOImpl implements AdProductDAO {
@@ -35,5 +36,19 @@ public class AdProductDAOImpl implements AdProductDAO {
 	public void insertProduct(ProductVO vo) throws Exception {
 		
 		session.insert(NS+".insertProduct", vo);
+	}
+
+	// 상품 리스트
+	@Override
+	public List<ProductVO> searchListProduct(SearchCriteria cri) throws Exception {
+
+		return session.selectList(NS+".searchListProduct", cri);
+	}
+
+	// 검색 조건에 맞는 상품 개수
+	@Override
+	public int searchListCount(SearchCriteria cri) throws Exception {
+		
+		return session.selectOne(NS+".searchListCount", cri);
 	}
 }

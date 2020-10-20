@@ -25,6 +25,8 @@
   	} else if("${msg}"=="LOGOUT_SUCCESS"){
   		alert("로그아웃되었습니다.");
   		
+  	} else if("${msg}"=="PROINSERT_SUCCESS"){
+  		alert("상품등록이 완료되었습니다.");
   	}
   </script>
 </head>

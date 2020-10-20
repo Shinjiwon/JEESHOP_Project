@@ -25,4 +25,59 @@
     		VALUES(SEQ_PRO_NUM.NEXTVAL, #{cate_code}, #{cate_prtcode}, #{pro_name}, #{pro_price}, #{pro_discount}, 
     				#{pro_dev}, #{pro_detail}, #{pro_img}, #{pro_amount}, #{pro_buy}, SYSDATE)
 	</insert>
+	
+	<!-- 상품 검색(공통으로 포함) -->
+	<sql id="search">
+		<if test="searchType != null">
+			<!-- 상품명 검색 -->
+			<if test="searchType == 'name'.toString()">
+				WHERE PRO_NAME LIKE '%' || #{keyword} || '%'
+			</if>
+			<!-- 내용 검색 -->
+			<if test="searchType == 'detail'.toString()">
+				WHERE PRO_DETAIL LIKE '%' || #{keyword} || '%'
+			</if>
+			<!-- 제조사 검색 -->
+			<if test="searchType == 'company'.toString()">
+				WHERE PRO_DEV LIKE '%' || #{keyword} || '%'
+			</if>
+			<!-- 상품명 + 내용 검색 -->
+			<if test="searchType == 'name_detail'.toString()">
+				WHERE (PRO_NAME LIKE '%' || #{keyword} || '%')
+				OR (PRO_DETAIL LIKE '%' || #{keyword} || '%')
+			</if>
+			<!-- 상품명 + 제조사 검색 -->
+			<if test="searchType == 'name_company'.toString()">
+				WHERE (PRO_NAME LIKE '%' || #{keyword} || '%')
+				OR (PRO_DEV LIKE '%' || #{keyword} || '%')
+			</if>
+			<!-- 상품명 + 내용 + 제조사 검색 -->
+			<if test="searchType == 'all'.toString()">
+				WHERE (PRO_NAME LIKE '%' || #{keyword} || '%')
+				OR (PRO_DETAIL LIKE '%' || #{keyword} || '%')
+				OR (PRO_DEV LIKE '%' || #{keyword} || '%')
+			</if>
+		</if>
+	</sql>
+	
+	<!-- 상품 리스트(검색조건 포함) -->
+	<select id="searchListProduct" parameterType="SearchCriteria" resultType="ProductVO">
+		SELECT PRO_NUM, CATE_CODE, CATE_PRTCODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+        PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT, PRO_BUY, PRO_DATE, PRO_UPDATE
+		FROM(SELECT PRO_NUM, CATE_CODE, CATE_PRTCODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+		                PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT, PRO_BUY, PRO_DATE, PRO_UPDATE, 
+		                ROW_NUMBER() OVER(ORDER BY PRO_NUM DESC) PRO_SEQ
+		    FROM PRODUCT_TB
+		    <include refid="search" />)
+		WHERE PRO_SEQ BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+	
+	<!-- 상품 개수(검색조건 포함) -->
+	<select id="searchListCount">
+		<![CDATA[
+			SELECT COUNT(PRO_NUM)
+			FROM PRODUCT_TB
+		]]>
+		<include refid="search" />
+	</select>
 </mapper>

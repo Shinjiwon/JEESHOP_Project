@@ -1,5 +1,7 @@
 package com.jeeshop.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +31,7 @@ import com.jeeshop.domain.CategoryVO;
 import com.jeeshop.domain.ProductVO;
 import com.jeeshop.service.AdProductService;
 import com.jeeshop.util.FileUtils;
+import com.jeeshop.util.SearchCriteria;
 
 @Controller
 @RequestMapping("/admin/product/*")
@@ -53,6 +57,7 @@ public class AdProductController {
 	}
 	
 	// ▶ 상품 등록(POST)
+	@RequestMapping(value = "insert", method = RequestMethod.POST)
 	public String proInsertPOST(ProductVO vo, RedirectAttributes rttr) throws Exception {
 	
 		logger.info("=====proInsertPOST execute()...");
@@ -61,9 +66,26 @@ public class AdProductController {
 		vo.setPro_img(FileUtils.uploadFile(uploadPath, vo.getFile1().getOriginalFilename(), vo.getFile1().getBytes()));
 		
 		service.insertProduct(vo);
-		rttr.addFlashAttribute("msg", "INSERT_SUCCESS");
+		rttr.addFlashAttribute("msg", "PROINSERT_SUCCESS");
 		
-		return null;
+		return "redirect:/admin/main";
+	}
+	
+	// ▶ 상품 리스트
+	/* url 이 처음 요청 받았을 경우  SearchCriteria cri 기본값을 가지게 됨. 
+	   this.page = 1; 현재 페이지 번호. this.perPageNum = 10; // 페이지에 출력 게시물 개수
+	   searchType = null,  keyword = null
+	*/
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	public void proList(@ModelAttribute("") SearchCriteria cri, Model model) throws Exception {
+		
+		logger.info("=====proList execute()...");
+		logger.info("=====cri: " + cri.toString());
+		
+		// 페이지 기능이 적용 된 상품 데이터
+		model.addAttribute("productList", service.searchListProduct(cri));
+		
+		// PageMaker 생성
 	}
 	
 	// ▶ 1차 카테고리에 해당하는 2차 카테고리
@@ -114,7 +136,7 @@ public class AdProductController {
 			String uploadPath = req.getSession().getServletContext().getRealPath("/");
 			uploadPath = uploadPath + "resources\\upload\\" + fileName;
 			
-			logger.info("uploadPath: " + uploadPath);
+			logger.info("=====uploadPath: " + uploadPath);
 			
 			// 출력 스트림 생성
 			out = new FileOutputStream(new File(uploadPath));

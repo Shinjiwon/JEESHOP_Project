@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.jeeshop.dao.AdProductDAO;
 import com.jeeshop.domain.CategoryVO;
 import com.jeeshop.domain.ProductVO;
+import com.jeeshop.util.SearchCriteria;
 
 @Service
 public class AdProductServiceImpl implements AdProductService {
@@ -34,6 +35,20 @@ public class AdProductServiceImpl implements AdProductService {
 	public void insertProduct(ProductVO vo) throws Exception {
 
 		dao.insertProduct(vo);
+	}
+
+	// 상품 리스트
+	@Override
+	public List<ProductVO> searchListProduct(SearchCriteria cri) throws Exception {
+
+		return dao.searchListProduct(cri);
+	}
+
+	// 검색 조건에 맞는 상품 개수
+	@Override
+	public int searchListCount(SearchCriteria cri) throws Exception {
+		
+		return dao.searchListCount(cri);
 	}
 
 }

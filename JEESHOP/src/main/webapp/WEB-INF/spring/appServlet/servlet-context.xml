@@ -47,7 +47,7 @@
 	
 	<!-- 파일 업로드 Path: 상품 업로드 이미지 경로(섬네일 이미지) / 외부 영역에 저장 -->
 	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="D:\\Temp"></beans:constructor-arg>
+		<beans:constructor-arg value="D:\\Temp\\upload"></beans:constructor-arg>
 	</beans:bean>
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

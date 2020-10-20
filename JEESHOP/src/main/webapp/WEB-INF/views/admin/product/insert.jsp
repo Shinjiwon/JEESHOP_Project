@@ -199,6 +199,8 @@
 		    target.append(options);
 		}
 	</script>
+	<!-- 상품등록 버튼 클릭 -->
+	<script type="text/javascript" src="/js/admin/proinsert.js"></script>
 </body>
 
 </html>

@@ -40,6 +40,7 @@ public class FileUtils {
 		String saveName = uuid.toString() + "_" + originName;
 		// 파일 경로 설정 ex>날짜 경로 → \\2020\\10\\17
 		String savePath = calcPath(uploadPath);
+		System.out.println(savePath);
 		// 설정 된 정보로 빈 파일 생성
 		File target = new File(uploadPath + savePath, saveName);
 		// 생성한 파일에 데이터 씀
@@ -86,7 +87,7 @@ public class FileUtils {
 		// 경로별 모든 폴더 생성
 		makeDir(uploadPath, yearPath, monthPath, datePath);
 		
-		return uploadPath;
+		return datePath;
 	}
 	
 	// ▶ 폴더 생성 메서드
@@ -124,7 +125,7 @@ public class FileUtils {
 	 */
 	private static String makeThumbNail(String uploadPath, String path, String fileName) throws Exception {
 		
-		BufferedImage sourceImg = ImageIO.read(new File(uploadPath + path + fileName));
+		BufferedImage sourceImg = ImageIO.read(new File(uploadPath + path, fileName));
 		// 썸네일 높이 80px, 너비 맞춤
 		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 120);
 		

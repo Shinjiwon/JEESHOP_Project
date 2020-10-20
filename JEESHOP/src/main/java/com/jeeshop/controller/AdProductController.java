@@ -31,6 +31,7 @@ import com.jeeshop.domain.CategoryVO;
 import com.jeeshop.domain.ProductVO;
 import com.jeeshop.service.AdProductService;
 import com.jeeshop.util.FileUtils;
+import com.jeeshop.util.PageMaker;
 import com.jeeshop.util.SearchCriteria;
 
 @Controller
@@ -86,6 +87,17 @@ public class AdProductController {
 		model.addAttribute("productList", service.searchListProduct(cri));
 		
 		// PageMaker 생성
+		PageMaker pm = new PageMaker(); // 1 2 3 4 5
+		pm.setCri(cri); // 페이징 정보(page, perPageNum), 검색정보(searchType, keyword)
+		
+		// 테이블 전체 데이터 개수
+		int count = service.searchListCount(cri);
+		
+		logger.info("=====일치하는 상품의 개수: " + count);
+		pm.setTotalCount(count);
+		
+		// list.jsp에 1 2 3 4 5 링크 기능까지 작업 할 수 있는 정보
+		model.addAttribute("pm", pm);
 	}
 	
 	// ▶ 1차 카테고리에 해당하는 2차 카테고리

@@ -1,6 +1,7 @@
 package com.jeeshop.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,20 @@ public class AdProductServiceImpl implements AdProductService {
 	public int searchListCount(SearchCriteria cri) throws Exception {
 		
 		return dao.searchListCount(cri);
+	}
+	
+	// 체크된 상품 수정
+	@Override
+	public void editCheck(Map<String, Object> map) throws Exception {
+
+		dao.editCheck(map);
+	}
+
+	// 상품 삭제
+	@Override
+	public void proDelete(int pro_num) throws Exception {
+
+		dao.proDelete(pro_num);
 	}
 
 }

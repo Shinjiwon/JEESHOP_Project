@@ -1,6 +1,7 @@
 package com.jeeshop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jeeshop.domain.CategoryVO;
 import com.jeeshop.domain.ProductVO;
@@ -22,4 +23,10 @@ public interface AdProductDAO {
 	
 	// 검색 조건에 맞는 상품 개수
 	public int searchListCount(SearchCriteria cri) throws Exception;
+	
+	// 체크된 상품 수정
+	public void editCheck(Map<String, Object> map) throws Exception;
+	
+	// 상품 삭제
+	public void proDelete(int pro_num) throws Exception;
 }

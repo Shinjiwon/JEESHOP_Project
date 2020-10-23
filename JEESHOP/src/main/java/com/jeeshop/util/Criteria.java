@@ -14,7 +14,7 @@ public class Criteria {
 	public Criteria() {
 		
 		this.page = 1; // 현재 페이지 번호
-		this.perPageNum = 10; // 한 페이지당 출력 게시물 개수
+		this.perPageNum = 5; // 한 페이지당 출력 게시물 개수
 	}
 	
 	public void setPage(int page) {
@@ -30,7 +30,7 @@ public class Criteria {
 	public void setPerPageNum(int perPageNum) {
 		
 		if(perPageNum <= 0 || perPageNum > 100) {
-			this.perPageNum = 10;
+			this.perPageNum = 5;
 			return;
 		}
 		

@@ -13,7 +13,7 @@ public class PageMaker {
 	private boolean next;
 	
 	// 페이지 번호의 개수: 1 2 3 4 5
-	private int displayPageNum = 5;
+	private int displayPageNum = 1;
 	
 	//  1  2  3  4  5 : 페이지번호에 링크기능을 적용시 사용할 파라미터 
 	/* 

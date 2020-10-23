@@ -73,11 +73,24 @@
 	</select>
 	
 	<!-- 상품 개수(검색조건 포함) -->
-	<select id="searchListCount">
+	<select id="searchListCount" parameterType="SearchCriteria" resultType="int">
 		<![CDATA[
 			SELECT COUNT(PRO_NUM)
 			FROM PRODUCT_TB
 		]]>
 		<include refid="search" />
 	</select>
+	
+	<!-- 체크된 상품 수정 -->
+	<update id="editCheck" parameterType="Map">
+		UPDATE PRODUCT_TB
+		SET PRO_AMOUNT = #{pro_amount}, PRO_BUY = #{pro_buy}, PRO_UPDATE = SYSDATE
+		WHERE PRO_NUM = #{pro_num}
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="proDelete" parameterType="int">
+		DELETE PRODUCT_TB
+			WHERE PRO_NUM = #{pro_num}
+	</delete>
 </mapper>

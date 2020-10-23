@@ -1,6 +1,7 @@
 package com.jeeshop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,19 @@ public class AdProductDAOImpl implements AdProductDAO {
 	public int searchListCount(SearchCriteria cri) throws Exception {
 		
 		return session.selectOne(NS+".searchListCount", cri);
+	}
+	
+	// 체크된 상품 수정
+	@Override
+	public void editCheck(Map<String, Object> map) throws Exception {
+		
+		session.update(NS+".editCheck", map);
+	}
+
+	// 상품 삭제
+	@Override
+	public void proDelete(int pro_num) throws Exception {
+		
+		session.delete(NS+".proDelete", pro_num);
 	}
 }

@@ -1,12 +1,12 @@
 package com.jeeshop.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -69,7 +70,7 @@ public class AdProductController {
 		service.insertProduct(vo);
 		rttr.addFlashAttribute("msg", "PROINSERT_SUCCESS");
 		
-		return "redirect:/admin/main";
+		return "redirect:/admin/product/list";
 	}
 	
 	// ▶ 상품 리스트
@@ -78,7 +79,7 @@ public class AdProductController {
 	   searchType = null,  keyword = null
 	*/
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public void proList(@ModelAttribute("") SearchCriteria cri, Model model) throws Exception {
+	public void proList(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
 		
 		logger.info("=====proList execute()...");
 		logger.info("=====cri: " + cri.toString());
@@ -192,5 +193,81 @@ public class AdProductController {
 	public void deleteFile(String fileName) {
 		
 		FileUtils.deleteFile(uploadPath, fileName);
+	}
+	
+	// ▶ 체크된 상품 수정
+	@ResponseBody
+	@RequestMapping(value = "editCheck", method = RequestMethod.POST)
+	public ResponseEntity<String> proEditCheck(@RequestParam("checkArr[]") List<Integer> checkArr,
+											   @RequestParam("amountArr[]") List<Integer> amountArr,
+											   @RequestParam("buyArr[]") List<String> buyArr) {
+
+		logger.info("=====proEditCheck execute()...");
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			for(int i=0; i<checkArr.size(); i++) {
+				map.put("pro_num", checkArr.get(i));
+				map.put("pro_amount", amountArr.get(i));
+				map.put("pro_buy", buyArr.get(i));
+				
+				service.editCheck(map);
+			}
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			
+		}
+		entity = new ResponseEntity<String>(HttpStatus.OK);
+		
+		return entity;
+	}
+	
+	// ▶ 상품 삭제
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	public String proDeletePOST(SearchCriteria cri,
+								@RequestParam("pro_num") int pro_num,
+								@RequestParam("pro_img") String pro_img,
+								RedirectAttributes rttr) throws Exception {
+								
+		logger.info("=====proDeletePOST execute()...");
+		
+		// 상품 이미지 삭제
+		deleteFile(pro_img);
+		
+		// 상품 삭제
+		service.proDelete(pro_num);
+		
+		rttr.addFlashAttribute("cri", cri);
+		rttr.addFlashAttribute("msg", "DELETE_SUCCESS");
+
+		return "redirect:/admin/product/list";
+	}
+	
+	// ▶ 체크된 상품 삭제
+	@RequestMapping(value = "deleteCheck", method = RequestMethod.POST)
+	public ResponseEntity<String> proDeleteCheck(@RequestParam("checkArr[]") List<Integer> checkArr,
+												 @RequestParam("imgArr[]") List<String> imgArr) {
+		
+		logger.info("=====proDeleteCheck execute()...");
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			for (int i=0; i<checkArr.size(); i++) {
+				deleteFile(imgArr.get(i));
+				service.proDelete(checkArr.get(i));
+			}
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 }

@@ -40,7 +40,10 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">상품관리 MENU</h6>
             <a class="collapse-item" href="/admin/product/insert">상품 등록</a>
-            <a class="collapse-item" href="/admin/product/list">상품 목록</a>
+            <a class="collapse-item" href="/admin/product/list">전체 상품 목록</a>
+            <a class="collapse-item" href="/admin/product/list">아우터</a>
+            <a class="collapse-item" href="/admin/product/list">상의</a>
+            <a class="collapse-item" href="/admin/product/list">하의</a>
           </div>
         </div>
       </li>

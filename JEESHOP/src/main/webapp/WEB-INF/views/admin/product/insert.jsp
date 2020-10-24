@@ -48,7 +48,7 @@
 						<div class="box box-primary">
 							<div class="box-header">
 								<h3 class="box-title">상품 등록하기</h3>
-							</div>
+							</div><br>
 							
 							<!-- /.box-header -->
 							<form id='insertForm' role="form" action="/admin/product/insert" method="post" enctype="multipart/form-data">
@@ -136,7 +136,7 @@
         </div>
         <!-- 주요 내용  -->
 
-      </div>
+      </div><br>
 
       <!-- Footer -->
       <%@include file="/WEB-INF/views/include/footer_admin.jsp" %>

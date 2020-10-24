@@ -53,6 +53,20 @@ public class AdProductDAOImpl implements AdProductDAO {
 		return session.selectOne(NS+".searchListCount", cri);
 	}
 	
+	// 상품 정보 읽어오기
+	@Override
+	public ProductVO proRead(int pro_num) throws Exception {
+
+		return session.selectOne(NS+".proRead", pro_num);
+	}
+	
+	// 상품 수정
+	@Override
+	public void proEdit(ProductVO vo) throws Exception {
+
+		session.update(NS+".proEdit", vo);
+	}
+	
 	// 체크된 상품 수정
 	@Override
 	public void editCheck(Map<String, Object> map) throws Exception {
@@ -66,4 +80,5 @@ public class AdProductDAOImpl implements AdProductDAO {
 		
 		session.delete(NS+".proDelete", pro_num);
 	}
+
 }

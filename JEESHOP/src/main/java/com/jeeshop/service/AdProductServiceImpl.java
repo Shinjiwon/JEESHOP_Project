@@ -52,6 +52,20 @@ public class AdProductServiceImpl implements AdProductService {
 		return dao.searchListCount(cri);
 	}
 	
+	// 상품 정보 읽어오기
+	@Override
+	public ProductVO proRead(int pro_num) throws Exception {
+
+		return dao.proRead(pro_num);
+	}
+	
+	// 상품 수정
+	@Override
+	public void proEdit(ProductVO vo) throws Exception {
+
+		dao.proEdit(vo);
+	}
+	
 	// 체크된 상품 수정
 	@Override
 	public void editCheck(Map<String, Object> map) throws Exception {

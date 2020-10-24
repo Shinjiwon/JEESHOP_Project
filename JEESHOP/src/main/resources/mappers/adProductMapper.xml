@@ -81,6 +81,24 @@
 		<include refid="search" />
 	</select>
 	
+	<!-- 상품 정보 읽어오기 -->
+	<select id="proRead" parameterType="int" resultType="ProductVO">
+		SELECT P.PRO_NUM, C.CATE_CODE, C.CATE_PRTCODE, P.PRO_NAME, P.PRO_PRICE, P.PRO_DISCOUNT, 
+        		P.PRO_DEV, P.PRO_DETAIL, P.PRO_IMG, P.PRO_AMOUNT, P.PRO_BUY, P.PRO_DATE, P.PRO_UPDATE
+		FROM PRODUCT_TB P INNER JOIN CATEGORY_TB C
+		ON P.CATE_CODE = C.CATE_CODE
+		WHERE PRO_NUM = #{pro_num}
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="proEdit" parameterType="ProductVO">
+		UPDATE PRODUCT_TB
+		SET CATE_CODE = #{cate_code}, PRO_NAME = #{pro_name}, PRO_PRICE = #{pro_price}, PRO_DISCOUNT = #{pro_discount}, 
+		        PRO_DEV = #{pro_dev}, PRO_DETAIL = #{pro_detail}, PRO_IMG = #{pro_img}, PRO_AMOUNT = #{pro_amount}, 
+		        PRO_BUY = #{pro_buy}, PRO_UPDATE = SYSDATE
+		WHERE PRO_NUM = #{pro_num}
+	</update>
+	
 	<!-- 체크된 상품 수정 -->
 	<update id="editCheck" parameterType="Map">
 		UPDATE PRODUCT_TB

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -47,37 +49,52 @@
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<div class="box-header">
-								<h3 class="box-title">상품 등록하기</h3>
-							</div>
+								<h3 class="box-title">상품 수정하기</h3>
+							</div><br>
 							
 							<!-- /.box-header -->
-							<form id='insertForm' role="form" action="/admin/product/insert" method="post" enctype="multipart/form-data">
+							<form id='editForm' role="form" action="/admin/product/edit" method="post" enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
+										<input type="hidden" name="page" value="${cri.page}" />
+										<input type="hidden" name="perPageNum" value="${cri.perPageNum}" />
+										<input type="hidden" name="searchType" value="${cri.searchType}" />
+										<input type="hidden" name="keyword" value="${cri.keyword}" />
+									</div>
+										
+									<div class="form-group">
+										<input type="hidden" name="pro_num" value="${vo.pro_num}">
 										<label for="exampleInputEmail1" style="width:30%; margin-right:20px;" >1차 카테고리</label>
 										<label for="exampleInputEmail1" style="width:30%;" >2차 카테고리</label> <br />
 										<select class="form-control" id="mainCategory" name="cate_prtcode" style="width:30%; margin-right:10px; display: inline-block;" >
 										  <option value="default">1차 카테고리 선택</option>
-										  <c:forEach items="${cateList}" var="vo">
-										  <option value="${vo.cate_code}">${vo.cate_name}</option>
+										  <c:forEach items="${cateList}" var="list">
+										  <option value="${list.cate_code}" <c:out value="${vo.cate_prtcode == list.cate_code?'selected':''}"/>>
+										  	${list.cate_name}
+										  </option>
 										  </c:forEach>
 										</select>
 										
 										<select class="form-control" id="subCategory" name="cate_code" style="width: 30%; display: inline-block;">
 										 	<option value="default">2차 카테고리 선택</option>
+										 	<c:forEach items="${subCateList}" var="subList">
+										 		<option value="${subList.cate_code}" <c:out value="${vo.cate_code == subList.cate_code?'selected':''}"/>>
+										 			${subList.cate_name}
+										 		</option>
+										 	</c:forEach>
 										</select>
 									</div>
 									
 									<div class="form-group">
 										<label for="exampleInputEmail1">상품명</label> <input
 											type="text" id="pro_name" name="pro_name" class="form-control"
-											placeholder="상품명을 입력하세요.">
+											value="${vo.pro_name}">
 									</div>
 									
 									<div class="form-group">
 										<label for="exampleInputEmail1">제조사</label> <input
 											type="text" id="pro_dev" name="pro_dev" class="form-control"
-											placeholder="제조사를 입력하세요.">
+											value="${vo.pro_dev}">
 									</div>
 									
 									<div class="form-group">
@@ -85,21 +102,24 @@
 										<label for="exampleInputEmail1" style="width:40%;">할인</label> 
 										<input style="width:40%; margin-right:10px; display: inline-block;"
 											type="text" id="pro_price" name="pro_price" class="form-control" 
-											placeholder="상품가격을 입력하세요." />
+											value="${vo.pro_price}" />
 										<input style="width:40%; display: inline-block;"
 											type="text" id="pro_discount" name="pro_discount" class="form-control "
-											placeholder="할인률을 입력하세요." />
+											value="${vo.pro_discount}" />
 									</div>
 									
 									<div class="form-group">
 										<label for="exampleInputPassword1">상품 상세</label>
-										<textarea class="form-control" id="pro_detail" name="pro_detail" rows="8"
-											placeholder="상품상세 입력 ..."></textarea>
+										<textarea class="form-control" id="pro_detail" name="pro_detail" rows="8">
+											${vo.pro_detail}
+										</textarea>
 									</div>
 
 									<div class="form-group">
-										<label for="exampleInputEmail1">Thumbnail Image</label> <input
-											type="file" id="file1" name="file1" class="form-control" />
+									<input type="hidden" name="pro_img" value="${vo.pro_img}">
+										<label for="exampleInputEmail1">Thumbnail Image</label>
+										<span id="fileName">현재 파일:<c:out value="${originFile}" /></span> 
+										<input onchange="fileChange(this)" type="file" id="file1" name="file1" class="form-control" >
 									</div>
 									
 									<div class="form-group">
@@ -107,11 +127,22 @@
 										<label for="exampleInputEmail1" style="width:15%;">구매 가능여부</label><br /> 
 										<input style="width:30%; margin-right:10px; display: inline-block;"
 											type="text" id="pro_amount" name='pro_amount' class="form-control" 
-											placeholder="상품 수량을 입력하세요." />
+											value="${vo.pro_amount}" />
 										<select class="form-control" id="pro_buy" name="pro_buy" style="width: 15%; display: inline-block;">
-										  <option>Y</option>
-										  <option>N</option>
+										  <option <c:out value="${vo.pro_buy == 'Y'?'selected':'' }" />>Y</option>
+										  <option <c:out value="${vo.pro_buy == 'N'?'selected':'' }" />>N</option>
 										</select>
+									</div>
+									
+									<div class="form-group">
+										<label for="exampleInputEmail1" style="width:40%; margin-right:10px;">등록 날짜</label> 
+										<label for="exampleInputEmail1" style="width:40%;">업데이트 날짜</label> <br>
+										<span class="form-control" style="width:40%; margin-right:10px; display:inline-block;">
+											<fmt:formatDate value="${vo.pro_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+										</span>
+										<span class="form-control" style="width:40%; display: inline-block;">
+											<fmt:formatDate value="${vo.pro_update}" pattern="yyyy-MM-dd HH:mm:ss"/>
+										</span>
 									</div>
 								</div>
 								<!-- /.box-body -->
@@ -124,7 +155,8 @@
 									<ul class="mailbox-attachments clearfix uploadedList">
 									</ul>
 
-									<button id="btn_submit" type="button" class="btn btn-primary">상품등록</button>
+									<button id="btn_submit" type="button" class="btn btn-primary">상품수정</button>
+									<button id="btn_list" type="button" class="btn btn-secondary">상품목록</button>
 								</div>
 							</form>
 						</div>
@@ -136,7 +168,7 @@
         </div>
         <!-- 주요 내용  -->
 
-      </div>
+      </div><br>
 
       <!-- Footer -->
       <%@include file="/WEB-INF/views/include/footer_admin.jsp" %>
@@ -184,6 +216,17 @@
 		        subCateList(data, $("#subCategory"), $("#subCateListTemplate"))
 		        });
 		    });
+			
+		    /* 상품 목록 버튼 클릭 */
+		    $("#btn_list").click(function(){
+
+		        var result = confirm("수정하지 않고 상품목록으로 돌아가시겠습니까?");
+
+		        if(result){
+		            location.href = "/admin/product/list${pm.makeSearch(pm.cri.page)}";
+		        
+		        } else{} 
+		    });
 		
 		});
 	</script>
@@ -199,8 +242,18 @@
 		    target.append(options);
 		}
 	</script>
-	<!-- 상품등록 버튼 클릭 -->
-	<script type="text/javascript" src="/js/admin/proinsert.js"></script>
+	
+	<!-- 파일 변경 시 메세지 이벤트 -->
+	<script>
+		var fileChange = function(fis){
+			
+			var str = fis.value;
+			$("#fileName").html("파일 변경됨");
+		}
+	</script>
+	
+	<!-- 상품수정 버튼 클릭 -->
+	<script type="text/javascript" src="/js/admin/proedit.js"></script>
 </body>
 
 </html>

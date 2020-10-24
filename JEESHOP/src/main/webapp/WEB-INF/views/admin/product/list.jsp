@@ -22,6 +22,9 @@
   	} else if("${msg}"=="DELETE_SUCCESS"){
   		alert("상품삭제가 완료되었습니다.");
   		
+  	} else if("${msg}"=="EDIT_SUCCESS"){
+  		alert("상품수정이 완료되었습니다.");
+  		
   	}
   </script>
   
@@ -114,7 +117,7 @@
                    	 <input type="hidden" name="img_${productVO.pro_num}" value="${productVO.pro_img}" />
                      </td>
                      <td>
-                     <a href="/admin/product/read${pm.makeSearch(pm.cri.page)}&pdt_num=${productVO.pro_num}">
+                     <a href="/admin/product/read${pm.makeSearch(pm.cri.page)}&pro_num=${productVO.pro_num}">
                      ${productVO.pro_name}
                      </a>
                      </td>
@@ -293,7 +296,7 @@
 	            var pro_num = $(this).val();
 	            var pro_amount = $("input[name='amount_"+pro_num+"']").val();
 	            var pro_buy = $("select[name='buy_"+pro_num+"']").val();
-					
+	                
 	            checkArr.push(pro_num);
 	            amountArr.push(pro_amount);
 	            buyArr.push(pro_buy);
@@ -313,6 +316,14 @@
 	                location.href = "/admin/product/list${pm.makeSearch(pm.cri.page)}";
 	            }
 	        });
+	    });
+
+	    /* 상품 리스트 테이블에 포함된 수정버튼 클릭 */
+	    $("button[name=btn_edit]").click(function(){
+			
+	    	var pro_num = $(this).parent().children("input[name=pro_num]").val();
+	    	
+	        location.href = "/admin/product/edit${pm.makeSearch(pm.cri.page)}&pro_num=" + pro_num;
 	    });
 	});
   </script>

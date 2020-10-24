@@ -24,6 +24,12 @@ public interface AdProductDAO {
 	// 검색 조건에 맞는 상품 개수
 	public int searchListCount(SearchCriteria cri) throws Exception;
 	
+	// 상품 정보 읽어오기
+	public ProductVO proRead(int pro_num) throws Exception;
+	
+	// 상품 수정
+	public void proEdit(ProductVO vo) throws Exception;
+	
 	// 체크된 상품 수정
 	public void editCheck(Map<String, Object> map) throws Exception;
 	

@@ -1,5 +1,7 @@
 package com.jeeshop.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -193,6 +195,81 @@ public class AdProductController {
 	public void deleteFile(String fileName) {
 		
 		FileUtils.deleteFile(uploadPath, fileName);
+	}
+	
+	// ▶ 상품 상세정보 페이지
+	@RequestMapping(value = "read", method = RequestMethod.GET)
+	public void proRead(@ModelAttribute("cri") SearchCriteria cri,
+						@RequestParam("pro_num") int pro_num, Model model) throws Exception {
+		
+		logger.info("=====proRead execute()...");
+		
+		ProductVO vo = service.proRead(pro_num);
+		
+		logger.info("=====Product Detail: " + vo.toString());
+		
+		model.addAttribute("vo", vo);
+		
+		// 상품 목록 클릭시 필요
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+	}
+	
+	// ▶ 상품 수정(GET)
+	/*
+	 * 상품 정보
+	 * 1차 카테고리
+	 * 선택된 2차 카테고리
+	 * 저장되어있는 파일명
+	 * pageMagker → 상품 정보, 목록에 필요
+	 */
+	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	public void proEditGET(@ModelAttribute("cri") SearchCriteria cri,
+						   @RequestParam("pro_num") int pro_num, Model model) throws Exception {
+		logger.info("=====proEditGET execute");
+		
+		ProductVO vo = service.proRead(pro_num);
+		
+		logger.info("=====Product Detail: " + vo.toString());
+		
+		String originFile = vo.getPro_img().substring(vo.getPro_img().lastIndexOf("_") + 1);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("originFile", originFile);
+		model.addAttribute("cateList", service.mainCateList());
+		model.addAttribute("subCateList", service.subCateList(vo.getCate_prtcode()));
+		
+		// PageMaker → 상품목록 돌아가기 버튼 클릭 시 이동 목적
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		
+		model.addAttribute("pm", pm);
+	}
+	
+	// ▶ 상품 수정(POST)
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	public String proEditPOST(ProductVO vo, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
+		
+		logger.info("=====proEditPOST execute()...");
+		logger.info("=====Edit Info: " + vo.toString());
+		logger.info("=====Cri Info: " + cri.toString());
+		
+		// 파일 사이즈로 새로운 파일 등록 여부 확인
+		// 파일을 새로 등록하지 않은 경우, null값 또는 쓰레기 값이 넘어옴
+		if(vo.getFile1().getSize() > 0) { // 파일이 변경된 경우
+			// pro_img를 업로드 된 파일정보로 설정
+			logger.info("=====File is not Zero size...");
+			
+			vo.setPro_img(FileUtils.uploadFile(uploadPath, vo.getFile1().getOriginalFilename(), vo.getFile1().getBytes()));
+			
+		}
+		logger.info("=====Changed Info: " + vo.toString());
+		
+		service.proEdit(vo);
+		rttr.addFlashAttribute("cri", cri);
+		rttr.addFlashAttribute("msg", "EDIT_SUCCESS");
+		
+		return "redirect:/admin/product/list";
 	}
 	
 	// ▶ 체크된 상품 수정

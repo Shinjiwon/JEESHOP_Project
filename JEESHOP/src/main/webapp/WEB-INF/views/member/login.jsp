@@ -12,6 +12,9 @@
 	<!-- CSS here -->
 	<%@include file="/WEB-INF/views/include/estorecss.jsp" %>
 	
+	<!-- JS here -->
+	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
 	<script>
 		if("${msg}"=="LOGIN FAIL"){
 			alert("로그인에 실패하였습니다.\n아이디와 비밀번호를 다시 확인하세요.");
@@ -70,9 +73,6 @@
  	<!-- Footer -->
     <%@include file="/WEB-INF/views/include/footer.jsp" %>
 
-	<!-- JS here -->
-	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
-	
 	<!-- 로그인 버튼 클릭 -->
 	<script type="text/javascript" src="/js/member/login.js"></script>
 </body>

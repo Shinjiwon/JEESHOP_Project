@@ -12,6 +12,9 @@
 	<!-- CSS here -->
 	<%@include file="/WEB-INF/views/include/estorecss.jsp" %>
 	
+	<!-- JS here -->
+	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
 </head>
 
 <body>
@@ -42,9 +45,6 @@
  	<!-- Footer -->
     <%@include file="/WEB-INF/views/include/footer.jsp" %>
 
-	<!-- JS here -->
-	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
-	
 	<script>
 		if("${msg}" == "PW_CHECK_FAIL"){
 			alert("비밀번호가 다릅니다.");

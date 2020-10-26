@@ -45,41 +45,18 @@
 	        
 	        <!-- Mobile Menu -->
 	        <div class="slider-active">
-	            <div class="single-slider slider-height" data-background="assets/img/hero/h1_hero.jpg">
+	            <div class="single-slider slider-height" data-background="/assets/img/hero/h1_hero.jpg">
 	                <div class="container">
 	                    <div class="row d-flex align-items-center justify-content-between">
 	                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
 	                            <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-	                                <img src="assets/img/hero/hero_man.png" alt="">
+	                                <img src="/assets/img/hero/hero_man.png" alt="">
 	                            </div>
 	                        </div>
 	                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
 	                            <div class="hero__caption">
 	                                <h1 data-animation="fadeInRight" data-delay=".6s">New <br> Outer</h1>
 	                                <p data-animation="fadeInRight" data-delay=".8s">Best Outer By 2020!</p>
-	                                
-	                                <!-- Hero-btn -->
-	                                <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
-	                                    <a href="industries.html" class="btn hero-btn">Shop Now</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="single-slider slider-height" data-background="assets/img/hero/h1_hero.jpg">
-	                <div class="container">
-	                    <div class="row d-flex align-items-center justify-content-between">
-	                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
-	                            <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-	                                <img src="assets/img/hero/hero_man.png" alt="">
-	                            </div>
-	                        </div>
-	                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
-	                            <div class="hero__caption">
-	                                <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
-	                                <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
-	                                <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
 	                                
 	                                <!-- Hero-btn -->
 	                                <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
@@ -109,7 +86,7 @@
 	                <div class="col-xl-4 col-lg-6">
 	                    <div class="single-category mb-30">
 	                        <div class="category-img">
-	                            <img src="assets/img/categori/cat1.jpg" alt="">
+	                            <img src="/assets/img/categori/cat1.jpg" alt="">
 	                            <div class="category-caption">
 	                                <h2>Outer</h2>
 	                                <span class="best"><a href="#">Best New Deals</a></span>
@@ -121,7 +98,7 @@
 	                 <div class="col-xl-4 col-lg-6">
 	                    <div class="single-category mb-30">
 	                        <div class="category-img text-center">
-	                            <img src="assets/img/categori/cat2.jpg" alt="">
+	                            <img src="/assets/img/categori/cat2.jpg" alt="">
 	                            <div class="category-caption">
 	                                <span class="collection">SALE!</span>
 	                                <h2>TOP</h2>
@@ -133,7 +110,7 @@
 	                <div class="col-xl-4 col-lg-6">
 	                    <div class="single-category mb-30">
 	                        <div class="category-img">
-	                            <img src="assets/img/categori/cat3.jpg" alt="">
+	                            <img src="/assets/img/categori/cat3.jpg" alt="">
 	                            <div class="category-caption">
 	                                <h2>Bottom</h2>
 	                                <span class="best"><a href="#">Best New Deals</a></span>
@@ -183,5 +160,6 @@
 
 	<!-- JS here -->
 	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
 </body>
 </html>

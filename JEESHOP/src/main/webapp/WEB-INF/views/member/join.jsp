@@ -14,6 +14,9 @@
 	<!-- CSS here -->
 	<%@include file="/WEB-INF/views/include/estorecss.jsp" %>
 	
+	<!-- JS here -->
+	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
 </head>
 
 <body>
@@ -218,9 +221,6 @@
  	<!-- Footer -->
     <%@include file="/WEB-INF/views/include/footer.jsp" %>
     
-    <!-- JS here -->
-	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
-	
 	<!-- 유효성 검사 -->
 	<script type="text/javascript" src="/js/member/join.js"></script>
 

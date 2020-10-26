@@ -4,4 +4,20 @@
 
 <mapper namespace="com.jeeshop.mappers.ProductMapper">
 
+	<!-- 1차 카테고리 출력 -->
+	<select id="mainCateList" resultType="CategoryVO">
+		SELECT CATE_CODE, CATE_PRTCODE, CATE_NAME
+		FROM CATEGORY_TB
+		WHERE CATE_PRTCODE IS NULL
+	</select>
+	
+	<!-- 2차 카테고리 출력 -->
+	<select id="subCateList" parameterType="String" resultType="CategoryVO">
+		SELECT CATE_CODE, CATE_PRTCODE, CATE_NAME
+		FROM CATEGORY_TB
+		WHERE CATE_PRTCODE = #{cate_code}
+	</select>
+	
+	<!-- 카테고리명 출력 -->
+
 </mapper>

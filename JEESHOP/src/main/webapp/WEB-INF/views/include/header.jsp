@@ -1,6 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
+
+	<!-- JS here -->
+	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
+	<!-- Handlebars -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+	
+	<!-- Handlebar Template -->
+	<script id="subCateListTemplate" type="text/x-handlebars-template">
+	{{#each .}}
+		<li><a href="/product/list?cate_code={{cate_code}}">{{cate_name}}</a></li>
+	{{/each}}
+	</script>
+	
+	<!-- 2차 카테고리 템플릿 적용 -->
+	<script>
+		$(document).ready(function(){
+	
+		    $(".mainCategory").hover(function(){
+		        var mainCateCode = $(this).val();
+		        var url = "/product/subCateList/" + mainCateCode;
+	
+		        // REST방식 전송
+		        $.getJSON(url, function(data){
+		             // 전송 받은 데이터로 subCategory 템플릿에 적용
+		             subCateList(data, $(".subCategory"), $("#subCateListTemplate"));
+		        });
+		    });
+		});
+	
+		var subCateList = function(subCateStr, target, templateObject){
+		    var template = Handlebars.compile(templateObject.html());
+		    var lis = template(subCateStr);
+		    
+		    target.empty();
+		    target.append(lis);
+		}
+		
+	</script>
+	
 	<div class="header-area">
 		<div class="main-header ">
 		    <div class="header-top top-bg d-none d-lg-block">
@@ -46,28 +86,18 @@
 		                        <nav>                                                
 		                            <ul id="navigation">                                                                                                                                     
 		                                <li><a href="/">Home</a></li>
-		                                <li class="hot"><a href="#">아우터</a>
-		                                    <ul class="submenu">
-		                                        <li><a href="product_list.html">가딘건</a></li>
-		                                        <li><a href="single-product.html">자켓</a></li>
-		                                        <li><a href="single-product.html">점퍼</a></li>
-		                                    </ul>
+		                                
+		                                <!-- 카테고리 출력 -->
+		                                <c:forEach items="${userCateList}" var="list">
+		                                <li class="mainCategory" value="${list.cate_code}">
+		                                <a href="/product/list?cate_code=${list.cate_code}">
+		                                ${list.cate_name}
+		                                </a>
+		                                  <ul class="submenu subCategory"></ul>  
 		                                </li>
-		                                <li><a href="blog.html">상의</a>
-		                                    <ul class="submenu">
-		                                        <li><a href="blog.html">기본티</a></li>
-		                                        <li><a href="single-blog.html">맨투맨</a></li>
-		                                        <li><a href="single-blog.html">후드티/집업</a></li>
-		                                    </ul>
-		                                </li>
-		                                <li><a href="#">하의</a>
-		                                    <ul class="submenu">
-		                                        <li><a href="login.html">슬랙스</a></li>
-		                                        <li><a href="cart.html">청바지</a></li>
-		                                        <li><a href="elements.html">면바지</a></li>
-		                                    </ul>
-		                                </li>
-		                                <li><a href="contact.html">COMMUNITY</a>
+		                                </c:forEach>
+		                                
+		                                <li><a href="#">COMMUNITY</a>
 		                                	<ul class="submenu">
 		                                        <li><a href="#">공지사항</a></li>
 		                                        <li><a href="#">질문하기</a></li>

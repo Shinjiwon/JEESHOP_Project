@@ -18,6 +18,36 @@
 		WHERE CATE_PRTCODE = #{cate_code}
 	</select>
 	
-	<!-- 카테고리명 출력 -->
-
+	<!-- 각 카테고리코드에 해당하는 카테고리명 -->
+	<select id="cateName" parameterType="String" resultType="String">
+		SELECT CATE_NAME
+		FROM CATEGORY_TB
+		WHERE CATE_CODE = #{cate_code}
+	</select>
+	
+	<!-- 카테고리에 해당하는 상품리스트 -->
+	<select id="proListCate" parameterType="Map" resultType="ProductVO">
+		SELECT PRO_NUM, CATE_CODE, CATE_PRTCODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+        		PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT, PRO_BUY, PRO_DATE, PRO_UPDATE
+		FROM (SELECT PRO_NUM, CATE_CODE, CATE_PRTCODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+		        PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT, PRO_BUY, 
+		        PRO_DATE, PRO_UPDATE, ROW_NUMBER() OVER(ORDER BY PRO_NUM DESC) P_SEQ
+		      FROM PRODUCT_TB WHERE CATE_CODE = #{cate_code})
+		WHERE P_SEQ BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+	
+	<!-- 카테고리별 상품 개수 -->
+	<select id="proCount" parameterType="String" resultType="int">
+		SELECT COUNT(PRO_NUM)
+		FROM PRODUCT_TB
+		WHERE CATE_CODE = #{cate_code}
+	</select>
+	
+	<!-- 상품 상세정보 읽어오기 -->
+	<select id="proRead" parameterType="int" resultType="ProductVO">
+		SELECT PRO_NUM, CATE_CODE, PRO_NAME, PRO_PRICE, PRO_DISCOUNT, 
+        PRO_DEV, PRO_DETAIL, PRO_IMG, PRO_AMOUNT, PRO_BUY, PRO_DATE, PRO_UPDATE
+		FROM PRODUCT_TB
+		WHERE PRO_NUM = #{pro_num}
+	</select>
 </mapper>

@@ -1,10 +1,15 @@
 package com.jeeshop.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeeshop.dao.ReviewDAO;
 import com.jeeshop.domain.ReviewVO;
+import com.jeeshop.util.Criteria;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -25,6 +30,31 @@ public class ReviewServiceImpl implements ReviewService {
 
 		vo.setMb_id(mb_id);
 		dao.writeReview(vo);
+	}
+
+	// 상품후기 리스트
+	@Override
+	public List<ReviewVO> reviewList(int pro_num, Criteria cri) throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("pro_num", pro_num);
+		map.put("cri", cri);
+		
+		return dao.reviewList(map);
+	}
+
+	// 상품후기 수정
+	@Override
+	public void reviewModify(ReviewVO vo) throws Exception {
+		
+		dao.reviewModify(vo);
+	}
+
+	// 상품후기 삭제
+	@Override
+	public void reviewDel(int rew_num) throws Exception {
+
+		dao.reviewDel(rew_num);
 	}
 
 }

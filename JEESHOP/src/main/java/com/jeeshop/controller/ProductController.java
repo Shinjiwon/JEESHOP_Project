@@ -125,6 +125,7 @@ public class ProductController {
 		
 		model.addAttribute("pm", pm);
 		
-		// 해당 상품의 리뷰
+		// 해당 상품의 리뷰 개수
+		model.addAttribute("totalReview", reviewService.reviewCount(vo.getPro_num()));
 	}
 }

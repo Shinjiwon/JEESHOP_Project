@@ -16,17 +16,42 @@
 	<!-- Handlebars -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 	
+	<script id="template" type="text/x-handlebars-template">
+	{{#each .}}
+		<tr>
+			<td>{{rew_num}}</td>
+			<td>{{mb_id}}</td>
+			<td>{{prettifyDate rew_date}}</td>
+			<td><input type="hidden" value={{rew_score}} name="rew_score">{{checkRating rew_score}}</td>
+			<td>{{rew_content}}</td>
+			<td>{{eqReplyer mb_id rew_num}}</td>
+		</tr>
+	{{/each}}
+	</script>
+	
 	<style>
 		#star_grade a{
-			
 			font-size:22px;
 	        text-decoration: none;
 	        color: lightgray;
 		}
 		
 		#star_grade a.on{
-	        
 	        color: orange;
+		}
+		
+		#star_grade_modal a{
+			font-size:22px;
+	        text-decoration: none;
+	        color: lightgray;
+		}
+		
+		#star_grade_modal a.on{
+	        color: orange;
+		}
+		
+		td{
+			text-align: center;
 		}
 	</style>
 	
@@ -59,8 +84,8 @@
 		                        
 	                            <div class="card_area">
 				                <div class="product_count_area">
-				                	<form method="get" action="/order/buy" >
-				                    <p style="text-align: center;">Quantity</p>
+				                	<form method="get" action="/order/buy">
+				                    <p style="text-align: center;">수량</p>
 				                    <div class="product_count d-inline-block">
 				                        <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
 				                        <input class="product_count_item input-number" type="text" value="1" min="0" max="10">
@@ -86,7 +111,7 @@
 						
 						<!-- 상품 후기 -->
 						<div class="col-lg-12"><br><br>
-						<h3 style="text-align: center; color: steelblue">Review</h3><br>
+						<h3 style="text-align: center; color: grey;">Review</h3><br>
 						<div class="rating">
 							<p id="star_grade">
 						        <a href="#">★</a>
@@ -96,30 +121,86 @@
 						        <a href="#">★</a>
 							</p>
 						</div>
-						<textarea id="reviewContent" rows="3" style="border-color: steelblue; width:100%; color: black;"></textarea><br>
-						<br><button class="genric-btn info-border circle" id="btn_write_review" type="button">상품후기쓰기</button>
-						<button class="genric-btn info-border circle arrow" id="btn_see_review" type="button">상품후기보기</button>
+						<textarea id="reviewContent" rows="3" style="border-color: grey; width:100%; color: black;"></textarea><br>
 						</div>
 						
 						<!-- 상품후기 테이블 -->
-						
 				        <div class="table-responsive">
-				          <br><table class="table">
+				        <br><button class="genric-btn info-border circle" id="btn_write_review" type="button">상품후기쓰기</button>
+						<button class="genric-btn info-border circle arrow" id="btn_see_review" type="button">상품후기보기</button>
+						<small id='replycntSmall' style="color: grey;"> [ ${totalReview} ] </small><br>
+						
+						<!-- 상품리뷰 데이터가 없을 때 -->
+				          <br><table class="table" id="noReview" style="display: none;">
 				            <thead>
 				              <tr>
+				                <th scope="col" style="text-align: center;">댓글번호</th>
 				                <th scope="col" style="text-align: center;">ID</th>
 				                <th scope="col" style="text-align: center;">등록일</th>
 				                <th scope="col" style="text-align: center;">평점</th>
 				                <th scope="col" style="text-align: center;">내용</th>
 				              </tr>
 				            </thead>
-				            
 				            <tbody>
-				              <td colspan="4" style="text-align: center;">
+				              <td colspan="5" style="text-align: center;">
 				              	등록된 상품후기가 존재하지 않습니다.
 			              	  </td>
 				            </tbody>
 				          </table>
+						 </div>
+						 
+						 <!-- 상품리뷰가 있을 때 -->
+						 <div class="table-responsive" id="reviewListPage" style="display: none;">
+				          <br><table class="table" id="reviewList" >
+				            <thead>
+				              <tr>
+				              	<th scope="col" style="text-align: center;">댓글번호</th>
+				                <th scope="col" style="text-align: center;">ID</th>
+				                <th scope="col" style="text-align: center;">등록일</th>
+				                <th scope="col" style="text-align: center;">평점</th>
+				                <th scope="col" style="text-align: center;">내용</th>
+				                <th scope="col" style="text-align: center;"></th>
+				              </tr>
+				            </thead>
+				            <tbody>
+				            <!-- 리뷰 추가 위치 -->
+				            </tbody>
+				          </table>
+				          <!-- 리뷰테이블 페이징 -->
+				          <nav class="blog-pagination justify-content-center d-flex">
+				          <ul class="pagination">
+					          
+                          </ul>
+                          </nav>
+				          </div>
+				          
+				          <!-- 리뷰 수정 팝업 -->
+				          <div id="modifyModal" class="modal-message" role="dialog" style="display: none;">
+							  <div class="modal-dialog">
+							    <!-- Modal content-->
+							    <div class="modal-content">
+							      <div class="modal-header" >
+							        <div class="modal-title">
+							        <button type="button" class="close" onclick="modalreview()">&times;</button>
+										<p id="star_grade_modal">
+									        <a href="#">★</a>
+									        <a href="#">★</a>
+									        <a href="#">★</a>
+									        <a href="#">★</a>
+									        <a href="#">★</a>
+										</p>
+							        </div>
+							      </div>
+							      <div class="modal-body" data-rew_num>
+							        <p><input type="text" id="replytext" class="form-control" style="height: 80px;"></p>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="genric-btn info-border circle" id="btn_modal_modify">수정</button>
+							        <button type="button" class="genric-btn primary-border circle" onclick="modalreview()">닫기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 				        </div>
 	    		</section>
 			<!-- 상품 상세 -->
@@ -129,6 +210,74 @@
     
     <!-- JS here -->
 	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
+	<!-- 사용자 정의 헬퍼 -->
+	<script>
+	$(document).ready(function(){
+
+	    /* 사용자 정의헬퍼 */
+	    // 메게변수로 받은 timeValue를 원하는 날짜 형태로 바꿔준다.
+	    Handlebars.registerHelper("prettifyDate", function(timeValue){
+	        var dateObj = new Date(timeValue);
+	        var year = dateObj.getFullYear();
+	        var month = dateObj.getMonth() + 1;
+	        var date = dateObj.getDate();
+	        return year + "." + month + "." + date;
+	    });
+
+	    // 메게변수로 받은 별점을 출력
+	    Handlebars.registerHelper("checkRating", function(rating){
+
+	        var stars = "";
+
+	        switch(rating){
+	            case 1:
+	                 stars="★☆☆☆☆";
+	                 break;
+
+	            case 2:
+	                 stars="★★☆☆☆";
+	                 break;
+
+	            case 3:
+	                 stars="★★★☆☆";
+	                 break;
+
+	            case 4:
+	                 stars="★★★★☆";
+	                 break;
+
+	            case 5:
+	                 stars="★★★★★";
+	                 break;
+
+	            default:
+	                stars="☆☆☆☆☆";
+	        }
+	        return stars;
+	    });
+	     
+	    /* 로그인 한 아이디와 리뷰의 아이디 확인 후, 수정/삭제 버튼 활성화 */
+	    Handlebars.registerHelper("eqReplyer", function(replyer, rew_num){
+	         var btnHtml = "";
+	         var mb_id = "${sessionScope.user.mb_id}";
+
+	         if(replyer=="${user.mb_id}"){
+	              btnHtml = "<button class='genric-btn info-border circle replyLi' data-target='#modifyModal'>"
+	                         +"수정" + "</button>&nbsp;"
+	                         +"<button class='genric-btn danger-border circle'"
+	                         + "onclick='deleteReview("+rew_num+");'"
+	                         +"type='button'>삭제</button>";
+	         }
+	         return new Handlebars.SafeString(btnHtml);
+	    });
+	});
+	
+	function modalreview(){
+		
+		$("#modifyModal").hide();
+	}
+	</script>
 	
 	<!-- 유효성 검사 -->
 	<script type="text/javascript" src="/js/product/proread.js"></script>

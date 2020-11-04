@@ -16,5 +16,27 @@
 		INSERT INTO REVIEW_TB(REW_NUM, MB_ID, PRO_NUM, REW_CONTENT, REW_SCORE, REW_DATE)
 		VALUES(SEQ_REW_NUM.NEXTVAL, #{mb_id}, #{pro_num}, #{rew_content}, #{rew_score}, SYSDATE)
 	</insert>
+	
+	<!-- 상품후기 리스트 -->
+	<select id="reviewList" parameterType="Map" resultType="ReviewVO">
+		SELECT REW_NUM, MB_ID, PRO_NUM, REW_CONTENT, REW_SCORE, REW_DATE
+		FROM (SELECT REW_NUM, MB_ID, PRO_NUM, REW_CONTENT, REW_SCORE, REW_DATE,
+		                ROW_NUMBER() OVER(ORDER BY REW_NUM DESC) R_SEQ
+		        FROM REVIEW_TB
+		        WHERE PRO_NUM = #{pro_num})
+		WHERE R_SEQ BETWEEN #{cri.rowStart} AND #{cri.rowEnd}
+	</select>
+	
+	<!-- 상품후기 수정 -->
+	<update id="reviewModify" parameterType="ReviewVO">
+	UPDATE REVIEW_TB
+	SET REW_SCORE = #{rew_score}, REW_CONTENT = #{rew_content}
+	WHERE REW_NUM = #{rew_num}
+	</update>
 
+	<!-- 상품후기 삭제 -->
+	<delete id="reviewDel" parameterType="int">
+		DELETE FROM REVIEW_TB
+		WHERE REW_NUM = #{rew_num}
+	</delete>
 </mapper>

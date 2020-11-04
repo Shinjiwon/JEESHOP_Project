@@ -6709,7 +6709,7 @@ input:focus {
 /* line 97, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_contact.scss */
 .modal-message .modal-dialog {
   position: absolute;
-  top: 36%;
+  top: 200%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%) !important;
   margin: 0px;
@@ -6732,7 +6732,7 @@ input:focus {
   right: -15px;
   top: -15px;
   padding: 0px;
-  color: #fff;
+  color: gray;
   opacity: 1;
   cursor: pointer;
 }

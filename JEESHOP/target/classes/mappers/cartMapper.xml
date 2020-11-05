@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeeshop.mappers.CartMapper">
+
+	<!-- 장바구니 상품 추가 -->
+	<!-- MERGE문 이용 
+		 1)장바구니에 상품 존재하면 UPDATE → 상품수량 변경
+		 2)장바구니에 상품 존재하지 않으면 INSERT
+	  -->
+	<insert id="addCart" parameterType="CartVO">
+		MERGE INTO CART_TB C
+		USING DUAL
+		ON(C.MB_ID = #{mb_id} AND C.PRO_NUM = #{pro_num})
+		WHEN MATCHED THEN
+		    UPDATE SET CAT_AMOUNT = CAT_AMOUNT + #{cat_amount}
+		WHEN NOT MATCHED THEN
+		    INSERT(CAT_CODE, PRO_NUM, MB_ID, CAT_AMOUNT)
+		    VALUES(SEQ_CAT_CODE.NEXTVAL, #{pro_num}, #{mb_id}, #{cat_amount})
+	</insert>
+	
+	<!-- 장바구니 정보 가져오기: 장바구니 리스트 , 장바구니 정보 -->
+  	<select id="getCart" parameterType="String" resultType="CartProductVO">
+  		<![CDATA[
+  		SELECT C.CAT_CODE, C.CAT_AMOUNT, P.PRO_NUM, P.PRO_NAME, P.PRO_IMG,
+		        P.PRO_PRICE, P.PRO_DISCOUNT
+		FROM(SELECT CAT_CODE, PRO_NUM, MB_ID, CAT_AMOUNT 
+		        FROM CART_TB
+		        WHERE MB_ID = #{mb_id}) C
+		INNER JOIN PRODUCT_TB P
+		ON C.PRO_NUM = P.PRO_NUM
+		]]>
+  	</select>
+</mapper>

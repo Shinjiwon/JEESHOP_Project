@@ -2,6 +2,31 @@ var replyPage = 1;
 
 $(document).ready(function(){
 
+    /* 장바구니 버튼 클릭 시 */
+    $("#btn_cart").click(function(){
+
+        var pro_num = $("#pro_num").val();
+        var pro_amount = $("#ord_amount").val();
+
+        $.ajax({
+
+            url: "/cart/addMany",
+            type: "post",
+            dataType: "text",
+            data: {
+                pro_num: pro_num,
+                pro_amount: pro_amount
+            },
+            success: function(data){
+                var result = confirm("장바구니에 상품을 추가되었습니다.\n장바구니로 이동하시겠습니까?");
+
+                if(result){
+                    location.href = "/cart/list";
+                } else{}
+            }
+        });
+    });
+
     /* 리뷰영역 별점 클릭 시 색상변경*/
     $("#star_grade a").click(function(){
         $(this).parent().children("a").removeClass("on"); // 별점의 on클래스 전부제거
@@ -89,6 +114,40 @@ $(document).ready(function(){
 
        // 후기 번호 가져오기
        $(".modal-body").attr("data-rew_num", rew_num);
+    });
+
+    /* 수정창 수정 버튼 클릭 */
+    $("#btn_modal_modify").click(function(){
+
+        var rew_num = $(".modal-body").attr("data-rew_num");
+        var rew_content = $("#replytext").val();
+        var pro_num = $("#pro_num").val();
+
+        // 선택된 별점 개수 가져오기
+        var rew_score = 0;
+        $("#star_grade_modal a").each(function(i, e){
+
+            if($(this).attr('class')=='on'){
+                rew_score += 1;
+            }
+        });
+
+        // DB작업
+        $.ajax({
+
+            url: "/review/modify/",
+            type: "post",
+            dataType: "text",
+            data: {
+                "rew_num": rew_num,
+                "rew_content": rew_content,
+                "rew_score": rew_score
+            },
+            success: function(result){
+                alert("리뷰가 수정되었습니다.");
+                getPage("/review/" + pro_num + "/" + replyPage);
+            }
+        });
     });
 
     /* 상품후기 리스트 템플릿 적용 */

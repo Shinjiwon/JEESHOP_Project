@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jeeshop.mappers.OrderMapper">
+	<!-- 주문번호 시퀀스 가져오기 -->
+	<select id="readOrderNum" resultType="int">
+		SELECT SEQ_ORD_NUM.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 주문정보 추가 -->
+	<insert id="addOrder" parameterType="OrderVO">
+		INSERT INTO ORDER_TB(ORD_NUM, MB_ID, ORD_NAME, ORD_ZIPCODE, 
+								ORD_ADDR, ORD_DETADDR, ORD_PHONE, ORD_PRICE, ORD_DATE)
+		VALUES(#{ord_num}, #{mb_id}, #{ord_name}, #{ord_zipcode}, 
+				#{ord_addr}, #{ord_deaddr}, #{ord_phone}, #{ord_price}, SYSDATE)
+	</insert>
+	
+	<!--주문상세 추가 -->
+	<insert id="addOrder" parameterType="OrderDetailVO">
+		INSERT INTO ORDETAIL_TB(ORD_NUM, PRO_NUM, ORD_AMOUNT, ORD_PRICE)
+		VALUES (#{ord_num}, #{pro_num}, #{ord_amount}, #{ord_price})
+	</insert>
+</mapper>

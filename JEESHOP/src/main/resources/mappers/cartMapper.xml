@@ -32,4 +32,23 @@
 		ON C.PRO_NUM = P.PRO_NUM
 		]]>
   	</select>
+  	
+  	<!-- 장바구니 수량 변경 -->
+  	<update id="updateCart" parameterType="Map">
+  		UPDATE CART_TB
+		SET CAT_AMOUNT = #{cat_amount}
+		WHERE CAT_CODE = #{cat_code}
+  	</update>
+  	
+  	<!-- 장바구니 삭제 -->
+  	<delete id="deleteCart" parameterType="int">
+  		DELETE FROM CART_TB
+  		WHERE CAT_CODE = #{cat_code}
+  	</delete>
+  	
+  	<!-- 주문완료 후 장바구니 삭제 -->
+  	<delete id="deleteCartOrder">
+  		DELETE FROM CART_TB
+		WHERE PRO_NUM = #{pro_num} AND MB_ID = #{mb_id}
+  	</delete>
 </mapper>

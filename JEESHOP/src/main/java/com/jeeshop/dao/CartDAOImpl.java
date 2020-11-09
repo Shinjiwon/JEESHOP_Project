@@ -1,6 +1,7 @@
 package com.jeeshop.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,26 @@ public class CartDAOImpl implements CartDAO {
 		
 		return session.selectList(NS+".getCart", mb_id);
 	}
+	
+	// 장바구니 수량 변경
+	@Override
+	public void updateCart(Map map) throws Exception {
+
+		session.update(NS+".updateCart", map);
+	}
+
+	// 장바구니 삭제
+	@Override
+	public void deleteCart(int cat_code) throws Exception {
+
+		session.delete(NS+".deleteCart", cat_code);
+	}
+
+	// 주문완료 후 장바구니 삭제
+	@Override
+	public void deleteCartOrder(Map map) throws Exception {
+
+		session.delete(NS+".deleteCartOrder", map);
+	}
+
 }

@@ -1,5 +1,9 @@
 package com.jeeshop.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeeshop.domain.CartVO;
@@ -101,5 +106,56 @@ public class CartController {
 		MemberDTO dto = (MemberDTO) session.getAttribute("user");
 		
 		model.addAttribute("cartProductList", service.getCart(dto.getMb_id()));
+	}
+	
+	// ▶  장바구니 수량 변경
+	@ResponseBody
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public ResponseEntity<String> updateCart(int cat_code,int cat_amount) {
+		
+		logger.info("=====updateCart execute()...");
+		logger.info("=====cat_code: " + cat_code);
+		logger.info("=====cat_amount: " + cat_amount);
+		
+		ResponseEntity<String> entity = null;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cat_code", cat_code);
+		map.put("cat_amount", cat_amount);
+		
+		try {
+			service.updateCart(map);
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			
+		}
+		return entity;
+	}
+	
+	// ▶ 장바구니 선택상품 삭제
+	@ResponseBody
+	@RequestMapping(value = "deleteCheck", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteCheck(@RequestParam("checkArr[]") List<Integer> checkArr) throws Exception {
+		
+		logger.info("=====deleteCheck execute()...");
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			for(int cat_code: checkArr) {
+				service.deleteCart(cat_code);
+				
+			}
+			entity = new ResponseEntity<String>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 }

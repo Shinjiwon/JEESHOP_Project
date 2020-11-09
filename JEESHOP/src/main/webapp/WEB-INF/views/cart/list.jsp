@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,9 +42,9 @@
 		  <section class="cart_area section_padding">
 		    <div class="container">
 		      <div class="cart_inner">
-			    <button type="button" class="genric-btn info-border circle">
+			    <button type="button" class="genric-btn info-border circle" id="btn_buy_check">
 			    	선택상품 구매</button>
-			    <button type="button" class="genric-btn danger-border circle">
+			    <button type="button" class="genric-btn danger-border circle" id="btn_delete_check">
 			    	선택상품 삭제</button>
 		        <div class="table-responsive">
 		          <table class="table">
@@ -53,67 +54,82 @@
 		                	<input type="checkbox" id="checkAll" checked="checked"/>
 	                	</th>
 		                <th scope="col">번호</th>
-		                <th scope="col">이미지</th>
+		                <th scope="col"></th>
 		                <th scope="col">상품명</th>
 		                <th scope="col">판매가</th>
 		                <th scope="col">할인가</th>
-		                <th scope="col">수량</th>
 		                <th scope="col"></th>
+		                <th scope="col"></th>
+		                <th scope="col">수량</th>
 		              </tr>
 		            </thead>
 		            <tbody>
+		            <!-- 장바구니에 상품이 존재하지 않을 경우 -->
+		            <c:if test="${empty cartProductList}">
+		            <tr>
+		            	<td colspan="9">
+		            		<p style="padding:50px 0px; text-align: center;">장바구니에 담긴 상품이 없습니다.</p>
+		            	</td>
+		            </tr>
+		            </c:if>
+		            
+		            <!-- 장바구니에 상품이 존재할 경우 -->
+		            <c:set var="i" value="${fn:length(cartProductList)}" />
 		            <c:forEach items="${cartProductList}" var="cartProductVO">
 		              <tr>
 		              	<td>
-		              		<input type="checkbox" name="check" class="check" checked="checked" >
+		              		<input type="checkbox" value="${cartProductVO.cat_code}" name="check" class="check" checked="checked" >
+		              		<input type="hidden" id="pro_num_${cartProductVO.cat_code}" name="pro_num" value="${cartProductVO.pro_num}" >
+							<input type="hidden" name="cat_amount" value="${cartProductVO.cat_amount}" >
+							<input type="hidden" name="cat_code" value="${cartProductVO.cat_code}" >
 	              		</td>
-		                <td><h5>${cartProductVO.pro_num}</h5></td>
+		                <td><h5>${i}</h5></td>
 		                <td>
-		                <img src="/product/displayFile?fileName=${cartProductVO.pro_img}" style="width:50px; height: 50px;">
+			                <a href="/product/read?pro_num=${cartProductVO.pro_num}&cate_code=${cate_code}">
+			                <img src="/product/displayFile?fileName=${cartProductVO.pro_img}" style="width:70px; height: 70px;">
+			                </a>
 		                </td>
-		                <td><h5>${cartProductVO.pro_name}</h5> </td>
-		                <td><h5>￦<fmt:formatNumber value="${cartProductVO.pro_price}" pattern="###,###,###" /></h5></td>
-		                <td><h5>￦<fmt:formatNumber value="${(cartProductVO.pro_price)-(cartProductVO.pro_price*(cartProductVO.pro_discount*0.01))}" pattern="###,###,###" />
-		                        	(${cartProductVO.pro_discount}%)</h5></td>
 		                <td>
-		                    <input type="number" value="${cartProductVO.cat_amount}" style="width: 50px;">
+		                	<a href="/product/read?pro_num=${cartProductVO.pro_num}&cate_code=${cate_code}">
+		                	<h5>${cartProductVO.pro_name}</h5>
+		                	</a>
+                		</td>
+		                <td>
+			                <h5>￦<fmt:formatNumber value="${cartProductVO.pro_price}" pattern="###,###,###" /></h5>
+			                <input type="hidden" name="price_${cartProductVO.cat_code}" value="${cartProductVO.pro_price}" />
 		                </td>
-		                <td></td>
+		                <td>
+		                	<h5>￦<fmt:formatNumber value="${(cartProductVO.pro_price)-(cartProductVO.pro_price*(cartProductVO.pro_discount*0.01))}" pattern="###,###,###" />
+		                        	(${cartProductVO.pro_discount}%)</h5>
+		                    <input type="hidden" name="discount_${cartProductVO.cat_code}" value="${(cartProductVO.pro_price)-(cartProductVO.pro_price*(cartProductVO.pro_discount*0.01))}" />    	
+                       	</td>
+		                <td colspan="3" style="text-align: center;">
+		                    <input type="number" name="cat_amount_${cartProductVO.cat_code}"
+		                    	value="${cartProductVO.cat_amount}" style="width: 50px;">
+		                    <button type="button" name="btn_modify" class="genric-btn primary-border small"
+		                    	value="${cartProductVO.cat_code}">
+		                    	변경
+	                    	</button>
+		                </td>
+		                <c:set var="i" value="${i-1}" />
 		              </tr>
 		              </c:forEach>
-		              
-		              <tr class="bottom_button">
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td>
-		                  <div class="cupon_text float-right">
-		                    <button class="btn_1">수량 변경</button>
-		                  </div>
-		                </td>
-		              </tr>
-		            </tbody>
-		          </table>
+		              </tbody>
+		          </table><br><br>
 		          
 		          <table class="table" style="text-align: center;">
 		          	<tr>
 		          		<th><h5>총 판매가</h5></th>
-		          		<th><h5>총 할인금액</h5></th>
-		          		<th><h5>총 결제금액</h5></th>
+		          		<th><h5>총 결제금액(할인 포함)</h5></th>
 		          	</tr>
 		          	
 		          	<tr>
-		          		<td></td>
-		          		<td></td>
-		          		<td></td>
+		          		<td><h5 id="totalPrice">0</h5></td>
+		          		<td><h5 id="totalCount">0</h5></td>
 		          	</tr>
 		          </table>
 		          <div class="checkout_btn_inner float-right">
-		            <button class="btn_1">전체상품 구매</button>
+		            <button class="btn_1">상품 구매</button>
 		          </div>
 		        </div>
 		      </div>
@@ -125,6 +141,9 @@
     
     <!-- JS here -->
 	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
+	
+	<!-- 버튼 클릭 이벤트 -->
+	<script type="text/javascript" src="/js/cart/cartlist.js"></script>
 
 </body>
 </html>

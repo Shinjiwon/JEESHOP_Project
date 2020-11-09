@@ -85,20 +85,20 @@
 	                            <div class="card_area">
 				                <div class="product_count_area">
 				                	<form method="get" action="/order/buy">
-				                    <p style="text-align: center;">수량</p>
+				                    <p style="text-align: center;">수량</p> &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;
 				                    <div class="product_count d-inline-block">
 				                        <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
 				                        <input id="ord_amount" name="ord_amount" class="product_count_item input-number" 
 				                        		type="text" value="1">
 				                        <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
 				                    </div>
-				                </div><br><br>
-				                
-				                  <input type="hidden" id="pro_num" name="pro_num" value="${vo.pro_num}" />
-				                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="btn_buy" class="btn btn-default">구매하기</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				                    <input type="hidden" id="pro_num" name="pro_num" value="${vo.pro_num}" /><br><br>
+				                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				                  <button type="submit" id="btn_buy" class="btn btn-default">구매하기</button>&nbsp;&nbsp;&nbsp;&nbsp;
 				                  <button type="button" id="btn_cart" class="btn_3">장바구니</button>&nbsp;&nbsp;&nbsp;&nbsp;
 				                  <button type="button" id="btn_wish" class="btn_3">위시리스트</button>&nbsp;&nbsp;&nbsp;&nbsp;
 		                    	  </form>
+				                </div><br><br>
 		                    	</div><br>
 		        		</div><br>
 		        		

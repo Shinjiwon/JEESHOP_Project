@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jeeshop.dao.OrderDAO;
 import com.jeeshop.domain.OrderDetailVO;
@@ -20,6 +21,10 @@ public class OrderServiceImpl implements OrderService {
 	private CartService cartService;
 
 	// 주문정보 추가
+	/*
+	 * @Transactional → 메서드에서 2가지 이상의 기능이 사용될 때. Insert, Update, Delete
+	 */
+	@Transactional
 	@Override
 	public void addOrder(OrderVO order, OrderDetailVOList orderDetailList) throws Exception {
 		
@@ -37,9 +42,10 @@ public class OrderServiceImpl implements OrderService {
 		
 		// 주문상세 수 만큼 반복 작업
 		for(int i=0; i<list.size(); i++) {
+			
 			OrderDetailVO orderDetail = list.get(i);
 			orderDetail.setOrd_num(ord_num);
-			
+			dao.addOrderDetail(orderDetail);
 		}
 	}
 

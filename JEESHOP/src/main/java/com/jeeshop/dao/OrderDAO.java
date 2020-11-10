@@ -1,5 +1,6 @@
 package com.jeeshop.dao;
 
+import com.jeeshop.domain.OrderDetailVO;
 import com.jeeshop.domain.OrderVO;
 
 public interface OrderDAO {
@@ -9,4 +10,7 @@ public interface OrderDAO {
 	
 	// 주문정보 추가
 	public void addOrder(OrderVO vo) throws Exception;
+	
+	// 주문상세 추가
+	public void addOrderDetail(OrderDetailVO vo) throws Exception;
 }

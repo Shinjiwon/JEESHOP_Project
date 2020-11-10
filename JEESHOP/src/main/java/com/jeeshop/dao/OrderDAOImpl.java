@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jeeshop.domain.OrderDetailVO;
 import com.jeeshop.domain.OrderVO;
 
 @Repository
@@ -26,5 +27,12 @@ public class OrderDAOImpl implements OrderDAO {
 	public void addOrder(OrderVO vo) throws Exception {
 
 		session.insert(NS+".addOrder", vo);
+	}
+
+	// 주문상세 추가
+	@Override
+	public void addOrderDetail(OrderDetailVO vo) throws Exception {
+
+		session.insert(NS+".addOrderDetail", vo);
 	}
 }

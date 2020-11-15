@@ -42,7 +42,8 @@
 		  <section class="cart_area section_padding">
 		    <div class="container">
 		      <div class="cart_inner">
-			    <button type="button" class="genric-btn info-border circle" id="btn_buy_check">
+		      <form method="post" action="/order/buyFromCart" >
+			    <button type="submit" class="genric-btn info-border circle" id="btn_buy_check">
 			    	선택상품 구매</button>
 			    <button type="button" class="genric-btn danger-border circle" id="btn_delete_check">
 			    	선택상품 삭제</button>
@@ -116,7 +117,7 @@
 		              </c:forEach>
 		              </tbody>
 		          </table><br><br>
-		          
+		          </form>
 		          <table class="table" style="text-align: center;">
 		          	<tr>
 		          		<th><h5>총 판매가</h5></th>

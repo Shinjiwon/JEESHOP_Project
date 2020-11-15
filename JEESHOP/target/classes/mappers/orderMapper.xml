@@ -16,9 +16,40 @@
 				#{ord_addr}, #{ord_deaddr}, #{ord_phone}, #{ord_price}, SYSDATE)
 	</insert>
 	
-	<!-- 주문상세 추가 -->
+	<!-- 주문내역 추가 -->
 	<insert id="addOrderDetail" parameterType="OrderDetailVO">
 		INSERT INTO ORDETAIL_TB(ORD_NUM, PRO_NUM, ORD_AMOUNT, ORD_PRICE)
 		VALUES (#{ord_num}, #{pro_num}, #{ord_amount}, #{ord_price})
 	</insert>
+	
+	<!-- 주문 목록 -->
+	<select id="orderList" parameterType="String" resultType="OrderListVO">
+		SELECT P.PRO_IMG, P.PRO_NAME, D.ORD_NUM, D.PRO_NUM, D.ORD_AMOUNT,
+		        D.ORD_PRICE, O.ORD_DATE
+		FROM ORDETAIL_TB D
+		INNER JOIN ORDER_TB O
+		    ON D.ORD_NUM = O.ORD_NUM
+		INNER JOIN PRODUCT_TB P
+		    ON D.PRO_NUM = P.PRO_NUM
+		WHERE O.MB_ID = #{mb_id}
+		ORDER BY D.ORD_NUM DESC, D.PRO_NUM DESC
+	</select>
+	
+	<!-- 주문상세 정보 -->
+	<select id="readOrder" parameterType="int" resultType="OrderReadDetailVO">
+		SELECT O.ORD_AMOUNT, O.PRO_NUM, O.ORD_PRICE,
+		        P.PRO_NAME, P.PRO_IMG, P.PRO_PRICE
+		FROM ORDETAIL_TB O
+		INNER JOIN PRODUCT_TB P
+		    ON O.PRO_NUM = P.PRO_NUM
+		WHERE O.ORD_NUM = #{ord_num}
+	</select>
+	
+	<!-- 주문자 정보 -->
+	<select id="getOrder" parameterType="int" resultType="OrderVO">
+		SELECT ORD_NUM, MB_ID, ORD_NAME, ORD_POSTCODE, 
+		        ORD_ADDR, ORD_DETADDR, ORD_PHONE, ORD_PRICE, ORD_DATE
+		FROM ORDER_TB
+		WHERE ORD_NUM = #{ord_num}
+	</select>
 </mapper>

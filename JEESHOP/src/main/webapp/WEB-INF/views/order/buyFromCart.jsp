@@ -42,7 +42,7 @@
 		  <section class="cart_area section_padding">
 		    <div class="container">
 		      <div class="cart_inner">
-		      <form id="orderForm" method="post" action="/order/order">
+		      <form id="orderForm" method="post" action="/order/orderFromCart">
 		      <button type="button" class="genric-btn danger-border circle" 
 		      			id="btn_delete_check">
 			    	선택상품 삭제</button>
@@ -70,7 +70,12 @@
 		              		<input type="checkbox" value="${productVO.pro_num}" name="check" class="check" checked="checked" >
 		              		<input type="hidden" id="amount_${productVO.pro_num}" name="orderDetailList[${i.index}].ord_amount" value="${amountList[i.index]}" >
 							<input type="hidden" name="orderDetailList[${i.index}].pro_num" value="${productVO.pro_num}" >
-							<input type="hidden" name="orderDetailList[${i.index}].ord_price" value="${productVO.pro_discount}" >
+							<input type="hidden" name="orderDetailList[${i.index}].ord_price" 
+							value='<fmt:formatNumber value="${((productVO.pro_price)-(productVO.pro_price*(productVO.pro_discount*0.01)))*(amountList[i.index])}" 
+							pattern="0000"/>'>
+							<input type="hidden" name="ord_price" 
+							value='<fmt:formatNumber value="${((productVO.pro_price)-(productVO.pro_price*(productVO.pro_discount*0.01)))*(amountList[i.index])}" 
+							pattern="0000"/>'>
 	              		</td>
 		                <td>
 			                <a href="/product/read?pro_num=${productVO.pro_num}&cate_code=${cate_code}">
@@ -273,7 +278,7 @@
 	<%@include file="/WEB-INF/views/include/estorejs.jsp" %>
 	
 	<!-- 체크박스, 상품구매 버튼 클릭 -->
-	<script type="text/javascript" src="/js/order/orderbuy.js"></script>
+	<script type="text/javascript" src="/js/order/buycart.js"></script>
 	
 </body>
 </html>

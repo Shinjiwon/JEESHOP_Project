@@ -62,7 +62,7 @@
 		                           <li><a href="/member/pwChk?url=modify">회원정보 수정 </a></li>
 		                           <li><a href="/member/pwChk?url=pwChange">비밀번호 변경 </a></li>
 		                           <li><a href="/cart/list">장바구니</a></li>
-		                           <li><a href="#">주문조회</a></li>
+		                           <li><a href="/order/list">주문조회</a></li>
 		                           <li><a href="#">위시리스트</a></li>
 		                           </c:if>
 		                       </ul>

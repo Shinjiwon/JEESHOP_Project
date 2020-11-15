@@ -22,7 +22,7 @@ $(document).ready(function(){
 
         // 체크여부 검사
         if($("input[name='check']:checked").length == 0){
-            alert("삭제할 상품을 삭제하세요");
+            alert("삭제할 상품을 선택하세요");
             return;
 
         }

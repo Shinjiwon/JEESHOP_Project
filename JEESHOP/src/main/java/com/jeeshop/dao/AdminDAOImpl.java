@@ -1,10 +1,13 @@
 package com.jeeshop.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeeshop.domain.AdminVO;
+import com.jeeshop.domain.MemberVO;
 import com.jeeshop.dto.AdminDTO;
 
 @Repository
@@ -26,5 +29,12 @@ public class AdminDAOImpl implements AdminDAO {
 	public void loginUpdate(String admin_id) throws Exception {
 
 		session.update(NS+".loginUpdate", admin_id);
+	}
+
+	// 회원목록
+	@Override
+	public List<MemberVO> UserInfoList() throws Exception {
+		
+		return session.selectList(NS+".UserInfoList");
 	}
 }

@@ -54,7 +54,7 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">주문관리 MENU</h6>
-            <a class="collapse-item" href="utilities-color.html">주문 목록</a>
+            <a class="collapse-item" href="#">주문 목록</a>
           </div>
         </div>
       </li>
@@ -68,7 +68,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">회원관리 MENU</h6>
-            <a class="collapse-item" href="#">회원 목록</a>
+            <a class="collapse-item" href="/admin/userList">회원 목록</a>
           </div>
         </div>
       </li>

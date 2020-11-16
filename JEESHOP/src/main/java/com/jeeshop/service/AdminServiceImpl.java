@@ -1,10 +1,13 @@
 package com.jeeshop.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeeshop.dao.AdminDAO;
 import com.jeeshop.domain.AdminVO;
+import com.jeeshop.domain.MemberVO;
 import com.jeeshop.dto.AdminDTO;
 
 @Service
@@ -25,6 +28,13 @@ public class AdminServiceImpl implements AdminService {
 	public void loginUpdate(String admin_id) throws Exception {
 
 		dao.loginUpdate(admin_id);
+	}
+
+	// 회원목록
+	@Override
+	public List<MemberVO> UserInfoList() throws Exception {
+
+		return dao.UserInfoList();
 	}
 	
 }

@@ -19,9 +19,10 @@
 	</update>
 	
 	<!-- 사용자 정보 가져오기 -->
-	<select id="readUserInfo" resultType="MemberVO">
-		SELECT MB_ID, MB_NAME, MB_PW, MB_POSTCODE, MB_ADDR, MB_DEADDR, MB_PHONE, MB_NICK, MB_EMAIL, MB_ACCEPT, 
-			   	MB_POINT, MB_JOIN, MB_UPDATE, MB_AUTHCODE
+	<select id="UserInfoList" resultType="MemberVO">
+		SELECT MB_ID, MB_NAME, MB_POSTCODE, MB_ADDR, MB_DEADDR, MB_PHONE, 
+		        MB_NICK, MB_EMAIL, MB_ACCEPT, MB_JOIN
 		FROM MEMBER_TB
+		ORDER BY MB_NAME
 	</select>
 </mapper>

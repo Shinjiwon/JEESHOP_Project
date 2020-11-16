@@ -44,7 +44,7 @@
                         <div class="login_part_form_iner">
                             <h3>어서오세요 ! <br>
                                                                 로그인하기</h3><br>
-                            <form id="loginForm" class="row contact_form" action="/member/login" method="post">
+                            <form id="loginForm" class="row contact_form" action="/member/loginPost" method="post">
                                 <div class="col-md-12 form-group p_star">
                                     <input type="text" class="form-control" id="mb_id" name="mb_id"
                                         placeholder="ID">

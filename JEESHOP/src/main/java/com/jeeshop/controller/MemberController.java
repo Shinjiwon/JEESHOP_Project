@@ -121,7 +121,7 @@ public class MemberController {
 	  
 	  * RedirectAttributes 클래스: 이동되는 주소에 데이터를 사용하게 하기 위하여 
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
 	public String loginPOST(MemberDTO dto, HttpSession session, RedirectAttributes rttr) throws Exception {
 		
 		logger.info("loginPOST execute()...");

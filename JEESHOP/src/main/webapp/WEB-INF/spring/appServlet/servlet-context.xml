@@ -50,6 +50,17 @@
 		<beans:constructor-arg value="D:\\Temp\\upload"></beans:constructor-arg>
 	</beans:bean>
 	
+	<beans:bean id="authInterceptor" class="com.jeeshop.interceptor.AuthInterceptor"></beans:bean>
+	<beans:bean id="loginInterceptor" class="com.jeeshop.interceptor.LoginInterceptor"></beans:bean>
+	
+	<!-- 로그인 확인 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/loginPost" />
+			<beans:ref bean="loginInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

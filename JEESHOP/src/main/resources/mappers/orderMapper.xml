@@ -11,7 +11,7 @@
 	<!-- 주문정보 추가 -->
 	<insert id="addOrder" parameterType="OrderVO">
 		INSERT INTO ORDER_TB(ORD_NUM, MB_ID, ORD_NAME, ORD_POSTCODE, 
-								ORD_ADDR, ORD_DETADDR, ORD_PHONE, ORD_PRICE, ORD_DATE)
+								ORD_ADDR, ORD_DEADDR, ORD_PHONE, ORD_PRICE, ORD_DATE)
 		VALUES(#{ord_num}, #{mb_id}, #{ord_name}, #{ord_postcode}, 
 				#{ord_addr}, #{ord_deaddr}, #{ord_phone}, #{ord_price}, SYSDATE)
 	</insert>
@@ -48,7 +48,7 @@
 	<!-- 주문자 정보 -->
 	<select id="getOrder" parameterType="int" resultType="OrderVO">
 		SELECT ORD_NUM, MB_ID, ORD_NAME, ORD_POSTCODE, 
-		        ORD_ADDR, ORD_DETADDR, ORD_PHONE, ORD_PRICE, ORD_DATE
+		        ORD_ADDR, ORD_DEADDR, ORD_PHONE, ORD_PRICE, ORD_DATE
 		FROM ORDER_TB
 		WHERE ORD_NUM = #{ord_num}
 	</select>

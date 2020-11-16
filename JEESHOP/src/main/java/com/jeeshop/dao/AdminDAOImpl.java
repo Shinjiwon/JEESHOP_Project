@@ -37,4 +37,11 @@ public class AdminDAOImpl implements AdminDAO {
 		
 		return session.selectList(NS+".UserInfoList");
 	}
+
+	// 회원 수 가져오기
+	@Override
+	public int userCount() throws Exception {
+		
+		return session.selectOne(NS+".userCount");
+	}
 }

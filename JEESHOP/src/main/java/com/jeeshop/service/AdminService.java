@@ -16,4 +16,7 @@ public interface AdminService {
 	
 	// 회원목록
 	public List<MemberVO> UserInfoList() throws Exception;
+	
+	// 회원 수 가져오기
+	public int userCount() throws Exception;
 }

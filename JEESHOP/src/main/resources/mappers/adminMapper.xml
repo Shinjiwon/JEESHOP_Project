@@ -25,4 +25,10 @@
 		FROM MEMBER_TB
 		ORDER BY MB_NAME
 	</select>
+	
+	<!-- 사용자 수 가져오기 -->
+	<select id="userCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM MEMBER_TB
+	</select>
 </mapper>

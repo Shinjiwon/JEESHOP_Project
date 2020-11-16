@@ -52,15 +52,15 @@
                       <th>이메일</th>
                       <th>휴대폰</th>
                       <th>가입일</th>
-                      <th>광고동의 여부</th>
+                      <th>수신동의 여부</th>
                     </tr>
                   </thead>
                   
                   <tbody>
                      <c:if test="${empty userList}">
                      <tr>
-							<p style="padding:50px 0px; text-align: center;"><td colspan="10"> 
-							<p style="padding:50px 0px; text-align: center;">등록된 상품이 존재하지 않습니다.</p>
+							<p style="padding:50px 0px; text-align: center;"><td colspan="7"> 
+							<p style="padding:50px 0px; text-align: center;">회원이 존재하지 않습니다.</p>
 					</tr>	
                      </c:if>
                      

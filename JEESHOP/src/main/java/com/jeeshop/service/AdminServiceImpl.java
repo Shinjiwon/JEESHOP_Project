@@ -36,5 +36,12 @@ public class AdminServiceImpl implements AdminService {
 
 		return dao.UserInfoList();
 	}
+
+	// 회원 수 가져오기
+	@Override
+	public int userCount() throws Exception {
+		
+		return dao.userCount();
+	}
 	
 }

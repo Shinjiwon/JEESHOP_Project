@@ -20,6 +20,7 @@ import com.jeeshop.dto.AdminDTO;
 import com.jeeshop.service.AdminService;
 import com.jeeshop.service.MemberService;
 import com.jeeshop.util.Criteria;
+import com.jeeshop.util.PageMaker;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -27,9 +28,6 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService service;
-	
-	@Autowired
-	private MemberService memberService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
@@ -102,5 +100,12 @@ public class AdminController {
 		map.put("rowEnd", cri.getRowEnd());
 		
 		model.addAttribute("userList", service.UserInfoList());
+		
+		PageMaker pm = new PageMaker();
+		pm.setCri(cri);
+		int count = service.userCount();
+		pm.setTotalCount(count);
+		
+		model.addAttribute("pm", pm);
 	}
 }

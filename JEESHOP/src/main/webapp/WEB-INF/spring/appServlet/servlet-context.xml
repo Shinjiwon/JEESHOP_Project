@@ -59,6 +59,13 @@
 			<mapping path="/member/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
+		
+		<interceptor>
+			<mapping path="/cart/list"/>
+			<mapping path="/order/list"/>
+			<mapping path="/member/pwChk"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
 	</interceptors>
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

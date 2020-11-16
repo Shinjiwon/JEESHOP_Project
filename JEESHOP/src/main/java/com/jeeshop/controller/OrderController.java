@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jeeshop.domain.OrderDetailVO;
 import com.jeeshop.domain.OrderDetailVOList;
 import com.jeeshop.domain.OrderListVO;
 import com.jeeshop.domain.OrderVO;

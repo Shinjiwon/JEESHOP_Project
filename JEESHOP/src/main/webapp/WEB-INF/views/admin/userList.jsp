@@ -81,6 +81,7 @@
               
            
               <!-- 페이징 기능 -->
+             		<div class="text-center">
 					<ul class="pagination">
 						<!-- 이전표시 -->
 						<c:if test="${pm.prev}">
@@ -103,7 +104,7 @@
 						</li>
 						</c:if>
 					</ul>
-            
+            	</div>
           </div>
         </div>
         <!-- 주요 내용  -->

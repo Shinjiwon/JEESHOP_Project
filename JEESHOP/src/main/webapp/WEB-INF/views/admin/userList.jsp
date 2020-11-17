@@ -81,12 +81,11 @@
               
            
               <!-- 페이징 기능 -->
-              <div style="text-align: center;">
 					<ul class="pagination">
 						<!-- 이전표시 -->
 						<c:if test="${pm.prev}">
 						<li>
-						<a href="list${pm.makeSearch(pm.startPage-1)}">&laquo;</a>
+						<a href="userList${pm.makeQuery(pm.startPage-1)}">&laquo;</a>
 						</li>&nbsp;
 						</c:if>
 						
@@ -104,7 +103,6 @@
 						</li>
 						</c:if>
 					</ul>
-            </div>
             
           </div>
         </div>

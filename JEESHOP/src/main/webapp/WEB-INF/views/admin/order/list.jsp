@@ -83,33 +83,31 @@
                 </table>
               </div>
               
-           	  <%-- 
               <!-- 페이징 기능 -->
              		<div class="text-center">
 					<ul class="pagination">
 						<!-- 이전표시 -->
 						<c:if test="${pm.prev}">
 						<li>
-						<a href="userList${pm.makeQuery(pm.startPage-1)}">&laquo;</a>
+						<a href="list${pm.makeQuery(pm.startPage-1)}">&laquo;</a>
 						</li>&nbsp;
 						</c:if>
 						
 						<!-- 페이지 번호: 1 2 3 4 5 -->
 						<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="idx">
 						<li <c:out value="${pm.cri.page == idx?'class =active':''}"/>>
-						<a href="userList${pm.makeQuery(idx)}">${idx}</a>
+						<a href="list${pm.makeQuery(idx)}">${idx}</a>
 						</li>&nbsp;
 						</c:forEach>
 						
 						<!-- 다음 표시 -->
 						<c:if test="${pm.next && pm.endPage > 0}">
 						<li>
-						<a href="userList${pm.makeQuery(pm.endPage +1)}">&raquo;</a>
+						<a href="list${pm.makeQuery(pm.endPage +1)}">&raquo;</a>
 						</li>
 						</c:if>
 					</ul>
             	</div>
-            	--%>
           </div>
         </div>
         <!-- 주요 내용  -->

@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jeeshop.domain.AdminVO;
 import com.jeeshop.dto.AdminDTO;
 import com.jeeshop.service.AdminService;
-import com.jeeshop.service.MemberService;
 import com.jeeshop.util.Criteria;
 import com.jeeshop.util.PageMaker;
 

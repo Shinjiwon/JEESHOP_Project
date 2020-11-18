@@ -66,7 +66,7 @@
 		        	<div class="container">
 		            	<div class="row">
 		                	<div class="col-lg-6"><br><br>
-			                    <img src="/product/displayFile?fileName=${vo.pro_img}">
+			                    <img src="/product/displayFile?fileName=${vo.pro_img}" style="width: 500px; height: 520px;">
 		                	</div>
 		                	
 		                	<div class="col-lg-6"><br><br>

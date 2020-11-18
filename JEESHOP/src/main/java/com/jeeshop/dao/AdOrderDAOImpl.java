@@ -23,4 +23,11 @@ public class AdOrderDAOImpl implements AdOrderDAO {
 		
 		return session.selectList(NS+".orderList");
 	}
+
+	// 주문목록 개수
+	@Override
+	public int orderCount() throws Exception {
+		
+		return session.selectOne(NS+".orderCount");
+	}
 }

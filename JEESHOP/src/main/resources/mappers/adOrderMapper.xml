@@ -15,4 +15,10 @@
 		    ON D.PRO_NUM = P.PRO_NUM
 				ORDER BY D.ORD_NUM DESC, D.PRO_NUM DESC
 	</select>
+	
+	<!-- 주문목록 개수 -->
+	<select id="orderCount" resultType="int">
+		SELECT COUNT(*)
+		FROM ORDETAIL_TB
+	</select>
 </mapper>

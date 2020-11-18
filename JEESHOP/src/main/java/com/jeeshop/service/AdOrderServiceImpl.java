@@ -21,4 +21,11 @@ public class AdOrderServiceImpl implements AdOrderService {
 		
 		return dao.orderList();
 	}
+
+	// 주문목록 개수 가져오기
+	@Override
+	public int orderCount() throws Exception {
+		
+		return dao.orderCount();
+	}
 }

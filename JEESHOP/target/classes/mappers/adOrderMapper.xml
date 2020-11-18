@@ -5,5 +5,14 @@
 <mapper namespace="com.jeeshop.mappers.AdOrderMapper">
 
 	<!-- 주문목록 가져오기 -->
-	
+	<select id="orderList" resultType="AdOrderVO">
+		SELECT O.MB_ID, P.PRO_IMG, P.PRO_NAME, D.ORD_NUM, D.ORD_AMOUNT,
+		        D.ORD_PRICE, O.ORD_DATE, O.ORD_ADDR, O.ORD_DEADDR, O.ORD_PHONE
+		FROM ORDETAIL_TB D
+		INNER JOIN ORDER_TB O
+		    ON D.ORD_NUM = O.ORD_NUM
+		INNER JOIN PRODUCT_TB P
+		    ON D.PRO_NUM = P.PRO_NUM
+				ORDER BY D.ORD_NUM DESC, D.PRO_NUM DESC
+	</select>
 </mapper>

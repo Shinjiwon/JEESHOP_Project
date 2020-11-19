@@ -41,8 +41,8 @@
 		  <!--================Cart Area =================-->
 		  <section class="cart_area section_padding">
 		    <div class="container">
-		      <div class="cart_inner">
 		      <form method="post" action="/order/buyFromCart" >
+		      <div class="cart_inner">
 			    <button type="submit" class="genric-btn info-border circle" id="btn_buy_check">
 			    	선택상품 구매</button>
 			    <button type="button" class="genric-btn danger-border circle" id="btn_delete_check">

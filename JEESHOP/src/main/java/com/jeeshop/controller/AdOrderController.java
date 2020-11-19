@@ -31,11 +31,13 @@ public class AdOrderController {
 		
 		model.addAttribute("orderList", service.orderList());
 		
+		/*
 		PageMaker pm = new PageMaker();
 		pm.setCri(cri);
 		int count = service.orderCount();
 		pm.setTotalCount(count);
 		
 		model.addAttribute("pm", pm);
+		*/
 	}
 }

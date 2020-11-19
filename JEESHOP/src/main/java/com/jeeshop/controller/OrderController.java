@@ -119,7 +119,7 @@ public class OrderController {
 		for(int i=0; i<cat_codeList.size(); i++) { // 일반적인 전송 3개
 			for(int j=0; j<checkList.size(); j++) { // 체크박스 전송된 정보 2개
 				// 2번 true
-				if(cat_codeList.get(i)==checkList.get(j)) {
+				if((int)cat_codeList.get(i)==(int)checkList.get(j)) {
 					// 선택된 행의 상품 코드를 DB에서 가져와 컬렉션에 추가
 					productList.add(productService.proRead((int)pro_numList.get(i)));
 					// cat_amountList.get(i): 선택된 행의 변경된 수량

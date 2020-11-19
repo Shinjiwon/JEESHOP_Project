@@ -61,7 +61,7 @@
                   <tbody>
                      <c:if test="${empty orderList}">
                      <tr>
-							<p style="padding:50px 0px; text-align: center;"><td colspan="7"> 
+							<p style="padding:50px 0px; text-align: center;"><td colspan="9"> 
 							<p style="padding:50px 0px; text-align: center;">주문목록이 존재하지 않습니다.</p>
 					</tr>	
                      </c:if>
@@ -71,7 +71,7 @@
                      <td>${list.ord_num}</td>
                      <td>${list.mb_id}</td>
                      <td>${list.ord_phone}</td>
-                     <td>${list.ord_addr}${list.ord_deaddr}</td>
+                     <td>${list.ord_addr} ${list.ord_deaddr}</td>
                      <td><img src="/product/displayFile?fileName=${list.pro_img}" style="width:30px; height: 30px;"></td>
                      <td>${list.pro_name }</td>
                      <td>${list.ord_amount}</td>
@@ -83,6 +83,7 @@
                 </table>
               </div>
               
+              <%-- 
               <!-- 페이징 기능 -->
              		<div class="text-center">
 					<ul class="pagination">
@@ -108,6 +109,7 @@
 						</c:if>
 					</ul>
             	</div>
+            	--%>
           </div>
         </div>
         <!-- 주요 내용  -->

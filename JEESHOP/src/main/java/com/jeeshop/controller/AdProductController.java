@@ -133,6 +133,7 @@ public class AdProductController {
 		logger.info("imgUpload execute()...");
 		
 		OutputStream out = null;
+		
 		PrintWriter printWriter = null;
 		
 		// 1)클라이언트로 보내기 위한 정보 설정
